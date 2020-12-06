@@ -1,9 +1,19 @@
 package org.homeapart.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 
+@Data
+@Entity
+@EqualsAndHashCode(exclude = {"apart"})
+@Table(name = "m_city")
 public class City {
 
 
@@ -11,7 +21,7 @@ public class City {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+   @Column
     private String city;
 
     @ManyToOne

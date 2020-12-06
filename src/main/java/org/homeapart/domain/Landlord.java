@@ -1,5 +1,6 @@
 package org.homeapart.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -18,28 +19,28 @@ public class Landlord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @Column
     private String name;
 
-
+    @Column
     private String surname;
 
-
+    @Column
     private String phone;
 
-
+    @Column(name="e_mail")
     private String eMail;
 
-
+    @Column
     private Timestamp created;
 
-
+    @Column
     private Timestamp changed;
 
-
+    @Column
     private String login;
 
-
+    @Column
     private String password;
 
     @OneToMany(mappedBy = "landlord", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)

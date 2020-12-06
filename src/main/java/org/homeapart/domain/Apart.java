@@ -1,23 +1,33 @@
 package org.homeapart.domain;
 
-import org.homeapart.domain.enums.Additionally;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.homeapart.domain.enums.AdditionallyList;
 import org.homeapart.domain.enums.ApartamentStatus;
 
+import javax.persistence.*;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.Set;
 
+
+@Data
+@Entity
+@EqualsAndHashCode(exclude = {"city","additionally"})
+@Table(name = "m_apart")
 public class Apart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @Column
     private String type;
 
-
+    @Column
     private String apartName;
 
     @ManyToOne
@@ -25,16 +35,16 @@ public class Apart {
     @JsonBackReference
     private City city;
 
-
+    @Column
     private String address;
 
-
+    @Column
     private BigInteger guestNumber;
 
-
+    @Column
     private Double area;
 
-
+    @Column
     private Double costPerDay;
 
     @ManyToOne
@@ -43,13 +53,15 @@ public class Apart {
     private Landlord landlord;
 
 
+    @Column
+    @Enumerated(EnumType.STRING)
     private ApartamentStatus status =ApartamentStatus.BOOKED;
 
-
+    @Column
     private Timestamp created;
 
 
-
+    @Column
     private Timestamp changed;
 
 

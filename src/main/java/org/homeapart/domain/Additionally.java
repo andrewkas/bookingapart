@@ -1,18 +1,30 @@
 package org.homeapart.domain;
 
-public class Additionally {
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.homeapart.domain.enums.AdditionallyList;
+
+import javax.persistence.*;
+
+@Data
+@Entity
+@EqualsAndHashCode(exclude = {"apart"})
+@Table(name = "m_additionally")
+public class Additionally {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    private Additionally additionally;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private AdditionallyList additionally;
 
 
     @ManyToOne
-    @JoinColumn(name = "apart")
+    @JoinColumn(name = "apart_id")
     @JsonBackReference
     private Apart apart;
 
