@@ -29,7 +29,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public List<User> findAll() {
         try(Session session = sessionFactory.openSession()) {
-           return session.createQuery("select user from User user order by user.id asc", User.class).list();
+           return session.createQuery("select u from User u order by u.id asc", User.class).list();
 
         }
     }
@@ -41,7 +41,11 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findByLogin(String login) {
-        return Optional.empty();
+        try (
+        Session session=sessionFactory.openSession()){
+
+        return Optional.of(session.find(User.class,login));
+    }
     }
 
     @Override
@@ -61,7 +65,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findOne(Long key) {
-        return Optional.of(findById(key));
+        Session session=sessionFactory.openSession();
+        return Optional.of(session.find(User.class,key));
     }
 
     @Override
