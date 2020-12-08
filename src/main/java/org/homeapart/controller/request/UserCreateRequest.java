@@ -1,7 +1,7 @@
 package org.homeapart.controller.request;
 
-import lombok.Data;
 import org.homeapart.domain.enums.Gender;
+import lombok.Data;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -13,7 +13,7 @@ public class UserCreateRequest {
 
     private String surname;
 
-    private String eMail;
+    private String email;
 
     private Date birthDate;
 

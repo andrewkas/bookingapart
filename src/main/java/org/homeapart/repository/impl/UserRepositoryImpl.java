@@ -1,15 +1,15 @@
 package org.homeapart.repository.impl;
 
+import org.apache.log4j.Logger;
+import org.homeapart.domain.User;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.homeapart.domain.User;
 import org.homeapart.repository.UserRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +17,7 @@ import java.util.Optional;
 @Primary
 @Log4j2
 public class UserRepositoryImpl implements UserRepository {
+
 
     private SessionFactory sessionFactory;
 

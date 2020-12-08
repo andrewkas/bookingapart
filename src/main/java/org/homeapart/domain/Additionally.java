@@ -2,9 +2,9 @@ package org.homeapart.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.homeapart.domain.enums.AdditionallyList;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.homeapart.domain.enums.AdditionallyList;
 
 import javax.persistence.*;
 

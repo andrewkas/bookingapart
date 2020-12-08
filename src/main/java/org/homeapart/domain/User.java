@@ -1,8 +1,9 @@
 package org.homeapart.domain;
 
+import com.sun.istack.NotNull;
+import org.homeapart.domain.enums.Gender;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.homeapart.domain.enums.Gender;
 
 
 import javax.persistence.*;
@@ -30,7 +31,7 @@ public class User {
     private String surname;
 
     @Column(name="e_mail")
-    private String eMail;
+    private String email;
 
     @Column(name="birth_date")
     private Date birthDate;
