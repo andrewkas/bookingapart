@@ -10,7 +10,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication (scanBasePackages = "org.homeapart")
 @EnableSwagger2
-@EnableAspectJAutoProxy(proxyTargetClass = true)
+//@EnableAspectJAutoProxy(proxyTargetClass = true)
 @Import ({ApplicationBean.class, PersistenceContextBeansConfiguration.class})
 public class SpringBootApplicationStarter {
 

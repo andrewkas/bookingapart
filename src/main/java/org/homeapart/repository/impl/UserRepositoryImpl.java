@@ -1,6 +1,5 @@
 package org.homeapart.repository.impl;
 
-import org.apache.log4j.Logger;
 import org.homeapart.domain.User;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.Session;
@@ -16,14 +15,16 @@ import java.util.Optional;
 @Repository
 @Primary
 @Log4j2
-public class UserRepositoryImpl implements UserRepository {
+public class UserRepositoryImpl implements UserRepository{
 
 
     private SessionFactory sessionFactory;
+    //private final UserSpringDataRepository userSpringDataRepository;
 
 
     public UserRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+      //  this.userSpringDataRepository=userSpringDataRepository;
     }
 
 
@@ -41,7 +42,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findByLogin(String login) {
+    public Optional <User> findByLogin(String login) {
         try (
         Session session=sessionFactory.openSession()){
 
@@ -60,9 +61,10 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User findById(Long key) {
         try(Session session = sessionFactory.openSession()) {
-            return session.find(User.class, key);
-        }
+           return session.find(User.class, key);
     }
+        }
+
 
     @Override
     public Optional<User> findOne(Long key) {
