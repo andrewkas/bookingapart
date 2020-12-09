@@ -12,7 +12,7 @@ public interface CrudRepository <K,V>{
 
         V findById(K key);
 
-        Optional<V> findOne(K key);
+       // Optional<V> findOne(K key);
 
         V update(V object);
 

@@ -3,6 +3,7 @@ package org.homeapart.controller;
 import org.homeapart.controller.request.SearchCriteria;
 import org.homeapart.controller.request.UserChangeRequest;
 import org.homeapart.controller.request.UserCreateRequest;
+import org.homeapart.controller.request.UserDeleteRequest;
 import org.homeapart.domain.User;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +33,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Object> findAllUsers() {
-     //   Object o = UserRepository.testHql();
         List<User> all = userRepository.findAll();
-
         return new ResponseEntity<>(all, HttpStatus.OK);
     }
 
@@ -44,18 +43,13 @@ public class UserController {
         return userRepository.findById(id);
     }
 
-    @GetMapping("/search")
-    @ResponseStatus(HttpStatus.OK)
-    public List<User> userSearch(@ModelAttribute SearchCriteria search) {
-        return userRepository.search(search.getQuery());
-    }
+    //   @GetMapping("/search")
+    //   @ResponseStatus(HttpStatus.OK)
+    //   public List<User> userSearch(@ModelAttribute SearchCriteria search) {
+    //       return userRepository.search(search.getQuery());
+    //   }
 
 
-    @ApiOperation(value = "Endpoint for creation users")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "Auth-Token", defaultValue = "token", required = true, paramType = "header", dataType = "string"),
-//            @ApiImplicitParam(name = "query", defaultValue = "query", required = false, paramType = "path", dataType = "string")
-//    })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public User savingUser(@RequestBody UserCreateRequest userCreateRequest) {
@@ -72,7 +66,7 @@ public class UserController {
         user.setEmail(userCreateRequest.getEmail());
 
         //user.setRoles(Collections.singleton(new HibernateRole("ROLE_ADMIN", user)));
-       // user.setRole(new HibernateRole(SystemRoles.ROLE_ADMIN, user));
+        // user.setRole(new HibernateRole(SystemRoles.ROLE_ADMIN, user));
         return userRepository.save(user);
 
     }
@@ -80,9 +74,9 @@ public class UserController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public User updateUser(@PathVariable Long id,
-                                    @RequestBody UserCreateRequest userCreateRequest) {
+                           @RequestBody UserCreateRequest userCreateRequest) {
 
-       User user = userRepository.findById(id);
+        User user = userRepository.findById(id);
 
         user.setGender(userCreateRequest.getGender());
         user.setName(userCreateRequest.getName());
@@ -94,7 +88,7 @@ public class UserController {
         user.setEmail(userCreateRequest.getEmail());
 
         //user.setRoles(Collections.singleton(new HibernateRole("ROLE_ADMIN", user)));
-       /// user.setRole(new HibernateRole(SystemRoles.ROLE_ADMIN, user));
+        /// user.setRole(new HibernateRole(SystemRoles.ROLE_ADMIN, user));
         return userRepository.update(user);
     }
 
@@ -117,4 +111,12 @@ public class UserController {
         return userRepository.update(user);
     }
 
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Long deleteUser(@RequestBody UserDeleteRequest userDeleteRequest) {
+        User user = userRepository.findById(userDeleteRequest.getId());
+
+        return userRepository.delete(user);
+    }
 }
+

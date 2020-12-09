@@ -29,7 +29,7 @@ public class Landlord {
     private String phone;
 
     @Column(name="e_mail")
-    private String eMail;
+    private String email;
 
     @Column
     private Timestamp created;

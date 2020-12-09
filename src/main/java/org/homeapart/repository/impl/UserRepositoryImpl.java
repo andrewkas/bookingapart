@@ -35,10 +35,6 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
-    @Override
-    public List<User> search(String query) {
-        return null;
-    }
 
     @Override
     public Optional<User> findByLogin(String login) {
@@ -64,13 +60,7 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
-    @Override
-    public Optional<User> findOne(Long key) {
-        Session session=sessionFactory.openSession();
-        return Optional.of(session.find(User.class,key));
-    }
-
-    @Override
+       @Override
     public User update(User object) {
         try(Session session = sessionFactory.openSession()) {
             Transaction transaction = session.getTransaction();
@@ -82,10 +72,13 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Long delete(User object) {
+    public Long delete(User user) {
         try(Session session = sessionFactory.openSession()) {
-            session.delete(object);
-            return object.getId();
+            Transaction transaction = session.getTransaction();
+            transaction.begin();
+            session.delete(user);
+            transaction.commit();
+            return user.getId();
         }
     }
 }
