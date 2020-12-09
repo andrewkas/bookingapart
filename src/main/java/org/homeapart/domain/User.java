@@ -19,7 +19,6 @@ import java.util.Date;
 @Table(name = "m_user")
 public class User {
 
-    @lombok.Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

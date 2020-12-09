@@ -8,6 +8,7 @@ import org.homeapart.domain.User;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.repository.UserRepository;
+import org.homeapart.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,14 +22,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/rest/user/hibernate")
+@RequestMapping("/rest/user")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserRepository userRepository;
+    private final UserService userRepository;
 
 
     @GetMapping
@@ -43,11 +46,12 @@ public class UserController {
         return userRepository.findById(id);
     }
 
-    //   @GetMapping("/search")
-    //   @ResponseStatus(HttpStatus.OK)
-    //   public List<User> userSearch(@ModelAttribute SearchCriteria search) {
-    //       return userRepository.search(search.getQuery());
-    //   }
+
+    @GetMapping("/{login}")
+    @ResponseStatus(HttpStatus.OK)
+    public Optional<User> findByLogin(@PathVariable String login){
+        return userRepository.findByLogin(login);
+    }
 
 
     @PostMapping
