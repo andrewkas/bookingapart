@@ -8,7 +8,6 @@ import org.homeapart.domain.User;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.repository.UserRepository;
-import org.homeapart.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +30,8 @@ import java.util.Optional;
 @RequestMapping("/rest/user")
 @RequiredArgsConstructor
 public class UserController {
-    private final UserService userRepository;
+
+    private final UserRepository userRepository;
 
 
     @GetMapping
@@ -47,11 +47,11 @@ public class UserController {
     }
 
 
-    @GetMapping("/{login}")
-    @ResponseStatus(HttpStatus.OK)
-    public Optional<User> findByLogin(@PathVariable String login){
-        return userRepository.findByLogin(login);
-    }
+ //   @GetMapping("{/login}")
+ //   @ResponseStatus(HttpStatus.OK)
+ //   public Optional<User> findByLogin(@PathVariable String login){
+ //       return userRepository.findByLogin(login);
+ //   }
 
 
     @PostMapping

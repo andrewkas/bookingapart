@@ -38,10 +38,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findByLogin(String login) {
+        try (
+                Session session=sessionFactory.openSession()){
 
-        return Optional.empty();
+            return Optional.of(session.find(User.class,login));
 
-    }
+    }}
 
     @Override
     public User save(User object) {
