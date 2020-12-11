@@ -9,6 +9,7 @@ import org.homeapart.domain.Landlord;
 import org.homeapart.domain.User;
 import org.homeapart.repository.LandlordRepository;
 import org.homeapart.repository.UserRepository;
+import org.homeapart.service.LandlordService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,23 +17,23 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.Timestamp;
 import java.util.List;
 @RestController
-@RequestMapping("/rest/landlord/hibernate")
+@RequestMapping("/landlord")
 @RequiredArgsConstructor
 public class LandlordController {
 
-        private final LandlordRepository landlordRepository;
+        private final LandlordService landlordService;
 
 
         @GetMapping
         public ResponseEntity<Object> findAllLandlord() {
-            List<Landlord> all = landlordRepository.findAll();
+            List<Landlord> all = landlordService.findAll();
             return new ResponseEntity<>(all, HttpStatus.OK);
         }
 
         @GetMapping("/{id}")
         @ResponseStatus(HttpStatus.OK)
         public Landlord findLandlordById(@PathVariable Long id) {
-            return landlordRepository.findById(id);
+            return landlordService.findById(id);
         }
 
 
@@ -52,16 +53,16 @@ public class LandlordController {
 
             //user.setRoles(Collections.singleton(new HibernateRole("ROLE_ADMIN", user)));
             // user.setRole(new HibernateRole(SystemRoles.ROLE_ADMIN, user));
-            return landlordRepository.save(landlord);
+            return landlordService.save(landlord);
 
         }
 
         @PutMapping("/{id}")
         @ResponseStatus(HttpStatus.OK)
-        public Landlord updateUser(@PathVariable Long id,
+        public Landlord updateLandlord(@PathVariable Long id,
                                @RequestBody LandlordCreateRequest landlordCreateRequest) {
 
-            Landlord landlord = landlordRepository.findById(id);
+            Landlord landlord = landlordService.findById(id);
 
             landlord.setName(landlordCreateRequest.getName());
             landlord.setSurname(landlordCreateRequest.getSurname());
@@ -74,14 +75,14 @@ public class LandlordController {
 
             //user.setRoles(Collections.singleton(new HibernateRole("ROLE_ADMIN", user)));
             /// user.setRole(new HibernateRole(SystemRoles.ROLE_ADMIN, user));
-            return landlordRepository.update(landlord);
+            return landlordService.update(landlord);
         }
 
         @PutMapping
         @ResponseStatus(HttpStatus.OK)
-        public Landlord updateUser(@RequestBody LandlordCreateRequest landlordCreateRequest) {
+        public Landlord updateLandlord(@RequestBody LandlordCreateRequest landlordCreateRequest) {
 
-            Landlord landlord = landlordRepository.findById(landlordCreateRequest.getId());
+            Landlord landlord = landlordService.findById(landlordCreateRequest.getId());
 
 
             landlord.setName(landlordCreateRequest.getName());
@@ -93,15 +94,15 @@ public class LandlordController {
             landlord.setPhone(landlordCreateRequest.getPhone());
 
 
-            return landlordRepository.update(landlord);
+            return landlordService.update(landlord);
         }
 
         @DeleteMapping
         @ResponseStatus(HttpStatus.OK)
-        public Long deleteUser(@RequestBody UserDeleteRequest userDeleteRequest) {
-            Landlord landlord = landlordRepository.findById(userDeleteRequest.getId());
+        public Long deleteLandlord(@RequestBody UserDeleteRequest userDeleteRequest) {
+            Landlord landlord = landlordService.findById(userDeleteRequest.getId());
 
-            return landlordRepository.delete(landlord);
+            return landlordService.delete(landlord);
         }
     }
 

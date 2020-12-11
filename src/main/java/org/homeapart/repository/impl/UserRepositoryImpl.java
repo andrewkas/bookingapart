@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Primary
 @Log4j2
 public class UserRepositoryImpl implements UserRepository {
 

@@ -8,6 +8,8 @@ import org.homeapart.domain.User;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.repository.UserRepository;
+import org.homeapart.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,31 +29,25 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/rest/user")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
 
     @GetMapping
     public ResponseEntity<Object> findAllUsers() {
-        List<User> all = userRepository.findAll();
+        List<User> all = userService.findAll();
         return new ResponseEntity<>(all, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public User findUserById(@PathVariable Long id) {
-        return userRepository.findById(id);
+        return userService.findById(id);
     }
 
-
- //   @GetMapping("{/login}")
- //   @ResponseStatus(HttpStatus.OK)
- //   public Optional<User> findByLogin(@PathVariable String login){
- //       return userRepository.findByLogin(login);
- //   }
 
 
     @PostMapping
@@ -71,7 +67,7 @@ public class UserController {
 
         //user.setRoles(Collections.singleton(new HibernateRole("ROLE_ADMIN", user)));
         // user.setRole(new HibernateRole(SystemRoles.ROLE_ADMIN, user));
-        return userRepository.save(user);
+        return userService.save(user);
 
     }
 
@@ -80,7 +76,7 @@ public class UserController {
     public User updateUser(@PathVariable Long id,
                            @RequestBody UserCreateRequest userCreateRequest) {
 
-        User user = userRepository.findById(id);
+        User user = userService.findById(id);
 
         user.setGender(userCreateRequest.getGender());
         user.setName(userCreateRequest.getName());
@@ -93,14 +89,14 @@ public class UserController {
 
         //user.setRoles(Collections.singleton(new HibernateRole("ROLE_ADMIN", user)));
         /// user.setRole(new HibernateRole(SystemRoles.ROLE_ADMIN, user));
-        return userRepository.update(user);
+        return userService.update(user);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public User updateUser(@RequestBody UserChangeRequest userChangeRequest) {
 
-        User user = userRepository.findById(userChangeRequest.getId());
+        User user = userService.findById(userChangeRequest.getId());
 
         user.setGender(userChangeRequest.getGender());
         user.setName(userChangeRequest.getName());
@@ -112,15 +108,15 @@ public class UserController {
         user.setEmail(userChangeRequest.getEmail());
 
 
-        return userRepository.update(user);
+        return userService.update(user);
     }
 
     @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
     public Long deleteUser(@RequestBody UserDeleteRequest userDeleteRequest) {
-        User user = userRepository.findById(userDeleteRequest.getId());
+        User user = userService.findById(userDeleteRequest.getId());
 
-        return userRepository.delete(user);
+        return userService.delete(user);
     }
 }
 
