@@ -1,68 +1,41 @@
 package org.homeapart.controller;
 
-import org.homeapart.controller.request.SearchCriteria;
 import org.homeapart.controller.request.UserChangeRequest;
 import org.homeapart.controller.request.UserCreateRequest;
 import org.homeapart.domain.User;
-import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.homeapart.repository.UserRepository;
 import org.homeapart.repository.impl.UserSpringDataRepository;
-import org.homeapart.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/rest/user")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 
 
-    private final UserService userService;
+
 
     private final UserSpringDataRepository userSpringDataRepository;
 
-    @GetMapping("/spring-data/all")
+    @GetMapping("/data/all")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Page<User>> getUsersSpringData(@ApiIgnore Pageable pageable) {
         return new ResponseEntity<>(userSpringDataRepository.findAll(pageable), HttpStatus.OK);
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<Object> findAllUsers() {
-        List<User> all = userService.findAll();
-
-        return new ResponseEntity<>(all, HttpStatus.OK);
-    }
-
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public User findUserById(@PathVariable Long id) {
-        return userService.findById(id);
-    }
-
-
-    @GetMapping("/search")
-    @ResponseStatus(HttpStatus.OK)
-    public List<User> userSearch(@ModelAttribute SearchCriteria search) {
-        return userService.search(search.getQuery());
+    public Optional<User> findUserById(@PathVariable Long id) {
+        return userSpringDataRepository.findById(id);
     }
 
 
@@ -84,7 +57,7 @@ public class UserController {
 
         //user.setRoles(Collections.singleton(new HibernateRole("ROLE_ADMIN", user)));
        // user.setRole(new HibernateRole(SystemRoles.ROLE_ADMIN, user));
-        return userService.save(user);
+        return userSpringDataRepository.save(user);
 
     }
 
@@ -93,7 +66,7 @@ public class UserController {
     public User updateUser(@PathVariable Long id,
                                     @RequestBody UserCreateRequest userCreateRequest) {
 
-       User user = userService.findById(id);
+       User user = userSpringDataRepository.getOne(id);
 
         user.setGender(userCreateRequest.getGender());
         user.setName(userCreateRequest.getName());
@@ -106,14 +79,14 @@ public class UserController {
 
         //user.setRoles(Collections.singleton(new HibernateRole("ROLE_ADMIN", user)));
        /// user.setRole(new HibernateRole(SystemRoles.ROLE_ADMIN, user));
-        return userService.update(user);
+        return userSpringDataRepository.save(user);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public User updateUser(@RequestBody UserChangeRequest userChangeRequest) {
 
-        User user = userService.findById(userChangeRequest.getId());
+        User user = userSpringDataRepository.getOne(userChangeRequest.getId());
 
         user.setGender(userChangeRequest.getGender());
         user.setName(userChangeRequest.getName());
@@ -125,7 +98,15 @@ public class UserController {
         user.setEmail(userChangeRequest.getEmail());
 
 
-        return userService.update(user);
+        return userSpringDataRepository.save(user);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<User> userDelete(@PathVariable Long id){
+        userSpringDataRepository.deleteById(id);
+
+        return userSpringDataRepository.findAll();
     }
 
 }

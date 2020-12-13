@@ -25,7 +25,7 @@ public class Logging {
 //        log.info("Method " + joinPoint.getSignature().getName() + " finished");
 //    }
 
-        @Pointcut("execution(* org.homeapart.repository.impl.UserRepositoryImpl.*(..))")
+        @Pointcut("execution(* org.homeapart.repository.impl.UserSpringDataRepository.*(..))")
         public void aroundRepositoryPointcut() {
         }
 
