@@ -53,32 +53,17 @@ create unique index m_landlord_login_uindex
 create index m_landlord_name_index
     on m_landlord (name);
 
-create table m_country
+create table m_address
 (
-    id      bigserial    not null
-        constraint m_country_pk
+    id        serial       not null
+        constraint m_address_pk
             primary key,
-    country varchar(200) not null
+    "Country" varchar(200) not null,
+    "City"    varchar(200) not null,
+    location  varchar(200) not null
 );
 
-alter table m_country
-    owner to postgres;
-
-create unique index m_country_id_uindex
-    on m_country (id);
-
-create table m_city
-(
-    id         bigserial    not null
-        constraint m_city_pk
-            primary key,
-    city       varchar(200) not null,
-    country_id bigint       not null
-        constraint m_city_m_country_id_fk
-            references m_country
-);
-
-alter table m_city
+alter table m_address
     owner to postgres;
 
 create table m_apart
@@ -88,10 +73,9 @@ create table m_apart
             primary key,
     type         varchar(50)      not null,
     apart_name   varchar(100)     not null,
-    city_id      bigint           not null
-        constraint m_apart_m_city_id_fk
-            references m_city,
-    address      varchar(100)     not null,
+    address_id   bigint           not null
+        constraint m_apart_m_address_id_fk
+            references m_address,
     guest_number bigint           not null,
     area         double precision not null,
     cost_per_day double precision not null,
@@ -112,11 +96,8 @@ create unique index m_apart_id_uindex
 create index m_apart_type_index
     on m_apart (type);
 
-create unique index m_apart_address_uindex
-    on m_apart (address);
-
 create index m_apart_city_index
-    on m_apart (city_id);
+    on m_apart (address_id);
 
 create index m_apart_guest_number_index
     on m_apart (guest_number);
@@ -166,6 +147,15 @@ alter table m_booking
 create unique index m_booking_id_uindex
     on m_booking (id);
 
-create unique index m_city_id_uindex
-    on m_city (id);
+create index m_address_city_index
+    on m_address ("City");
+
+create index m_address_country_index
+    on m_address ("Country");
+
+create unique index m_address_id_uindex
+    on m_address (id);
+
+create index m_address_location_index
+    on m_address (location);
 

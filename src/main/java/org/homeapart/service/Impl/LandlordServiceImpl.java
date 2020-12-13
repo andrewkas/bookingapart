@@ -12,7 +12,12 @@ import java.util.Optional;
 @Service
 public class LandlordServiceImpl implements LandlordService {
 
-     private LandlordRepository landlordRepository;
+     private final LandlordRepository landlordRepository;
+
+    public LandlordServiceImpl(LandlordRepository landlordRepository) {
+        this.landlordRepository = landlordRepository;
+    }
+
     @Override
     public List<Landlord> findAll() {
         return landlordRepository.findAll();

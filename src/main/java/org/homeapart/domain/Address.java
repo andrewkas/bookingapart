@@ -12,8 +12,8 @@ import java.util.Set;
 @Data
 @Entity
 @EqualsAndHashCode
-@Table(name = "m_country")
-public class Country {
+@Table(name = "m_address")
+public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +23,20 @@ public class Country {
     private String country;
 
 
-    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @Column
+    private String city;
+
+
+    @Column
+    private String location;
+
+    @OneToOne(mappedBy = "address", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonManagedReference
-    private Set<City> citySet= Collections.emptySet();
+    private Apart apart;
+
+
+
+
 
 
 

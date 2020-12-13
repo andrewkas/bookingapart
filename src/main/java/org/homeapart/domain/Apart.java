@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@EqualsAndHashCode(exclude = {"city","additionally"})
+@EqualsAndHashCode(exclude = {"address","additionally"})
 @Table(name = "m_apart")
 public class Apart {
 
@@ -29,13 +29,11 @@ public class Apart {
     @Column
     private String apartName;
 
-    @ManyToOne
-    @JoinColumn(name = "city_id")
+    @OneToOne
+    @JoinColumn(name = "address_id")
     @JsonBackReference
-    private City city;
+    private Address address;
 
-    @Column
-    private String address;
 
     @Column
     private BigInteger guestNumber;

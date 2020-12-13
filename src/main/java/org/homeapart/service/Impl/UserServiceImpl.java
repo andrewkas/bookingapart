@@ -1,17 +1,18 @@
 package org.homeapart.service.Impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.homeapart.domain.User;
 import org.homeapart.repository.UserRepository;
 import org.homeapart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
@@ -42,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findByLogin(String login) {
-        return Optional.empty();
+        return userRepository.findByLogin(login);
     }
 
     @Override
