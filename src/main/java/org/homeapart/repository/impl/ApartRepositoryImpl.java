@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import org.homeapart.domain.Apart;
 import org.homeapart.domain.Landlord;
 import org.homeapart.repository.ApartRepository;
+import org.homeapart.service.AddressService;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public class ApartRepositoryImpl implements ApartRepository {
 
   private SessionFactory sessionFactory;
+
 
   public ApartRepositoryImpl(SessionFactory sessionFactory) {
     this.sessionFactory = sessionFactory;
