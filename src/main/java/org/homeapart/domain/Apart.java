@@ -36,7 +36,7 @@ public class Apart {
 
 
     @Column
-    private BigInteger guestNumber;
+    private Integer guestNumber;
 
     @Column
     private Double area;

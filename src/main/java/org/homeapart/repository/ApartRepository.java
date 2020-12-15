@@ -3,10 +3,11 @@ package org.homeapart.repository;
 import org.homeapart.domain.Apart;
 import org.homeapart.domain.Landlord;
 
+
 import java.util.List;
 import java.util.Optional;
 
-public interface ApartRepository extends CrudRepository<Long, Apart>{
+public interface ApartRepository extends CrudRepository<Long, Apart> {
 
     //List<Apart> search(String query);
 

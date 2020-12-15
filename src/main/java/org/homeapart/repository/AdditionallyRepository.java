@@ -1,4 +1,7 @@
 package org.homeapart.repository;
 
-public interface AdditionallyRepository extends CrudRepository{
+import org.homeapart.domain.Additionally;
+
+
+public interface AdditionallyRepository extends CrudRepository <Long, Additionally> {
 }
