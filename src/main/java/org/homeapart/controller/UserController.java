@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.homeapart.repository.impl.UserSpringDataRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Page<User>> getUsersSpringData(@ApiIgnore Pageable pageable) {
         return new ResponseEntity<>(userSpringDataRepository.findAll(pageable), HttpStatus.OK);
+      //  ,new Sort(Sort.Direction.ASC,"name")
     }
 
     @GetMapping("/{id}")
