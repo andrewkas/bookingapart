@@ -2,6 +2,8 @@ package org.homeapart.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.homeapart.domain.enums.ApartamentStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +19,8 @@ import java.util.Set;
 @Entity
 @EqualsAndHashCode(exclude = {"address","additionally"})
 @Table(name = "m_apart")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Apart {
 
     @Id
@@ -26,8 +30,9 @@ public class Apart {
     @Column
     private String type;
 
-    @Column
+    @Column(name="apart_name")
     private String apartName;
+
 
     @OneToOne
     @JoinColumn(name = "address_id")
@@ -35,13 +40,13 @@ public class Apart {
     private Address address;
 
 
-    @Column
+    @Column(name="guest_number")
     private Integer guestNumber;
 
     @Column
     private Double area;
 
-    @Column
+    @Column(name="cost_per_day")
     private Double costPerDay;
 
     @ManyToOne

@@ -42,7 +42,7 @@ public class LandlordRepositoryImpl implements LandlordRepository {
     public List<Landlord> findAll() {
         try (Session session = sessionFactory.openSession()){
 
-            return session.createQuery("select l from Landlord l", Landlord.class).list();
+            return session.createQuery("select l from Landlord as l", Landlord.class).list();
         }
     }
 

@@ -1,5 +1,6 @@
 package org.homeapart.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -44,7 +45,9 @@ public class Landlord {
     private String password;
 
     @OneToMany(mappedBy = "landlord", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+
     @JsonManagedReference
+
     private Set<Apart> apart = Collections.emptySet();
 
 

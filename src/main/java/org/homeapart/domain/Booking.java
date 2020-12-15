@@ -49,4 +49,6 @@ public class Booking {
     @Column
     private Timestamp changed;
 
+
+
 }
