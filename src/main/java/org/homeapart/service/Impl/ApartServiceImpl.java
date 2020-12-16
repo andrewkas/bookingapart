@@ -3,6 +3,7 @@ package org.homeapart.service.Impl;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.domain.Apart;
 import org.homeapart.domain.Landlord;
+import org.homeapart.domain.enums.ApartamentStatus;
 import org.homeapart.repository.ApartRepository;
 import org.homeapart.service.ApartService;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public class ApartServiceImpl implements ApartService {
     }
 
     @Override
-    public List<Apart> findByStatus(String status) {
+    public List<Apart> findByStatus(ApartamentStatus status) {
         return apartRepository.findByStatus(status);
     }
 

@@ -31,17 +31,29 @@ public class ApartController {
 
   //  private AdditionallyService additionallyService;
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<Object> findAllApart() {
         List<Apart> all = apartService.findAll();
         return new ResponseEntity<>(all, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Landlord findLandlordById(@PathVariable Long id) {
-        return landlordService.findById(id);
+    public Apart findApartById(@RequestParam (value="id") Long id) {
+        return apartService.findById(id);
     }
+
+    @GetMapping("/{apartamentStatus}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Apart> findByStatus(@PathVariable ApartamentStatus apartamentStatus){
+        return apartService.findByStatus(apartamentStatus);
+    }
+    @GetMapping("/type")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Apart> findByType(@RequestParam (value="type") String type){
+        return apartService.findByType(type);
+    }
+
 
 
     @PostMapping ("/add")
@@ -69,7 +81,7 @@ public class ApartController {
 
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Apart updateLandlord(@PathVariable Long id,
+    public Apart updateApart(@PathVariable Long id,
 
                                    @RequestBody ApartCreateRequest apartCreateRequest) {
         Apart apart=apartService.findById(id);

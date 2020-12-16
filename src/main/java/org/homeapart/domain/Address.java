@@ -34,7 +34,7 @@ public class Address {
     @Column
     private String location;
 
-    @OneToOne(mappedBy = "address", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToOne(mappedBy = "address", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private Apart apart;
 

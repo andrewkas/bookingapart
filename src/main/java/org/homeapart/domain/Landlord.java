@@ -44,9 +44,9 @@ public class Landlord {
     @Column
     private String password;
 
-    @OneToMany(mappedBy = "landlord", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "landlord", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 
-    @JsonManagedReference
+   // @JsonManagedReference
 
     private Set<Apart> apart = Collections.emptySet();
 

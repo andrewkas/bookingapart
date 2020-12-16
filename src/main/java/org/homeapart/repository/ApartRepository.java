@@ -2,6 +2,7 @@ package org.homeapart.repository;
 
 import org.homeapart.domain.Apart;
 import org.homeapart.domain.Landlord;
+import org.homeapart.domain.enums.ApartamentStatus;
 
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface ApartRepository extends CrudRepository<Long, Apart> {
 
     List<Apart> findByAddress(String country,String city);
 
-    List<Apart> findByStatus(String status);
+    List<Apart> findByStatus(ApartamentStatus status);
 
     List <Apart> findByType(String type);
 

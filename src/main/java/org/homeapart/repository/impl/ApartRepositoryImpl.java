@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.homeapart.domain.Apart;
 import org.homeapart.domain.Landlord;
+import org.homeapart.domain.enums.ApartamentStatus;
 import org.homeapart.repository.ApartRepository;
 import org.homeapart.service.AddressService;
 import org.springframework.stereotype.Repository;
@@ -34,10 +35,10 @@ public class ApartRepositoryImpl implements ApartRepository {
   }
 
   @Override
-  public List<Apart> findByStatus(String status) {
+  public List<Apart> findByStatus(ApartamentStatus status) {
     try (Session session = sessionFactory.openSession()) {
       return session
-          .createQuery("select a from Apart a where a.status=:status", Apart.class)
+          .createQuery("select a from Apart a where a.status=: status",Apart.class)
           .list();
     }
   }
@@ -45,7 +46,7 @@ public class ApartRepositoryImpl implements ApartRepository {
   @Override
   public List<Apart> findByType(String type) {
     try (Session session = sessionFactory.openSession()) {
-      return session.createQuery("select a from Apart a where a.type=:status", Apart.class).list();
+      return session.createQuery("select a from Apart a where a.type=:type", Apart.class).list();
     }
   }
 

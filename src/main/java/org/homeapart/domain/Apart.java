@@ -55,9 +55,9 @@ public class Apart {
     private Landlord landlord;
 
 
-    @Column
+    @Column (name="status")
     @Enumerated(EnumType.STRING)
-    private ApartamentStatus status =ApartamentStatus.BOOKED;
+    private ApartamentStatus status;
 
     @Column
     private Timestamp created;
@@ -67,7 +67,7 @@ public class Apart {
     private Timestamp changed;
 
 
-    @OneToMany(mappedBy = "apart", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "apart", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
     private Set<Additionally> additionally = Collections.emptySet();
 

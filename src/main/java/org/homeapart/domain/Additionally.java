@@ -23,7 +23,7 @@ public class Additionally {
     private AdditionallyList additionally;
 
 
-    @ManyToOne
+    @ManyToOne(optional=false)
     @JoinColumn(name = "apart_id")
     @JsonBackReference
     private Apart apart;

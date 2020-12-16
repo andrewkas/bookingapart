@@ -2,6 +2,7 @@ package org.homeapart.service;
 
 import org.homeapart.domain.Apart;
 import org.homeapart.domain.Landlord;
+import org.homeapart.domain.enums.ApartamentStatus;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public interface ApartService {
 
     List <Apart> findByType(String type);
 
-    List <Apart> findByStatus(String status);
+    List <Apart> findByStatus(ApartamentStatus status);
 
     Long delete (Apart apart);
 
