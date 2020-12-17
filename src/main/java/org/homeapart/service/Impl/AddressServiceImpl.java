@@ -8,6 +8,7 @@ import org.homeapart.service.AddressService;
 import org.springframework.beans.CachedIntrospectionResults;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 @Service
 public class AddressServiceImpl implements AddressService {
@@ -47,3 +48,4 @@ public class AddressServiceImpl implements AddressService {
         return addressRepository.findByCountryAndCity(country,city);
     }
 }
+

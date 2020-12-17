@@ -1,7 +1,5 @@
 package org.homeapart.controller;
 
-import com.neovisionaries.i18n.CountryCode;
-import com.neovisionaries.i18n.LocaleCode;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.controller.request.ApartCreateRequest;
 import org.homeapart.controller.request.LandlordCreateRequest;

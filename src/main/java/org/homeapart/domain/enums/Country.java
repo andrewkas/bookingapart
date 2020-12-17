@@ -7,11 +7,12 @@ import java.util.List;
 
 public enum Country {
     BELARUS
+
     ,POLAND
     ,UKRAINE
     ,RUSSIA
     ,USA;
 
+    }
 
-}
 
