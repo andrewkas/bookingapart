@@ -5,6 +5,7 @@ import org.homeapart.domain.Additionally;
 import org.homeapart.domain.Address;
 import org.homeapart.domain.Landlord;
 import org.homeapart.domain.enums.ApartamentStatus;
+import org.homeapart.domain.enums.ApartamentType;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
@@ -14,7 +15,7 @@ import java.util.Set;
 public class ApartCreateRequest {
 
 
-    private String type;
+    private ApartamentType type;
 
     private String apartName;
 

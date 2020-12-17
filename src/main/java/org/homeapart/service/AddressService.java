@@ -1,6 +1,8 @@
 package org.homeapart.service;
 
 import org.homeapart.domain.Address;
+import org.homeapart.domain.enums.City;
+import org.homeapart.domain.enums.Country;
 
 import java.util.List;
 
@@ -11,9 +13,13 @@ public interface AddressService {
 
     Address findById(Long id);
 
-    Address findByCity(String city);
+    List<Address> findByCity(City city);
 
-    Address findByCountry(String country);
+    List<Address> findByCountry(Country country);
+
+    List<Address> findByCountryAndCity(Country country,City city);
+
+
 
 
 

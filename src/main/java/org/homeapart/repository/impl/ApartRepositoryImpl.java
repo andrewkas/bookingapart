@@ -1,12 +1,14 @@
 package org.homeapart.repository.impl;
 
 import lombok.extern.log4j.Log4j2;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.homeapart.domain.Apart;
 import org.homeapart.domain.Landlord;
 import org.homeapart.domain.enums.ApartamentStatus;
+import org.homeapart.domain.enums.ApartamentType;
 import org.homeapart.repository.ApartRepository;
 import org.homeapart.service.AddressService;
 import org.springframework.stereotype.Repository;
@@ -38,15 +40,14 @@ public class ApartRepositoryImpl implements ApartRepository {
   public List<Apart> findByStatus(ApartamentStatus status) {
     try (Session session = sessionFactory.openSession()) {
       return session
-          .createQuery("select a from Apart a where a.status=: status",Apart.class)
-          .list();
+          .createQuery("select a from Apart a where a.status=: status",Apart.class).setParameter("status",status).list();
     }
   }
 
   @Override
-  public List<Apart> findByType(String type) {
+  public List<Apart> findByType (ApartamentType type) {
     try (Session session = sessionFactory.openSession()) {
-      return session.createQuery("select a from Apart a where a.type=:type", Apart.class).list();
+      return session.createQuery("select a from Apart a where a.type=:type", Apart.class).setParameter("type",type).list();
     }
   }
 

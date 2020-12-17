@@ -5,6 +5,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.homeapart.domain.Address;
+import org.homeapart.domain.enums.City;
+import org.homeapart.domain.enums.Country;
 import org.homeapart.repository.AddressRepository;
 import org.springframework.stereotype.Repository;
 
@@ -20,16 +22,23 @@ public class AddressRepositoryImpl implements AddressRepository {
     }
 
     @Override
-    public Address findByCity(String city) {
+    public List<Address> findByCity(City city) {
     try (Session session = sessionFactory.openSession()) {
-      return session.find(Address.class, city);
+      return session.createQuery("select a from Address a where a.city=:city",Address.class).setParameter("city",city).list();
         }
     }
 
     @Override
-    public Address findByCountry(String country) {
+    public List<Address> findByCountry(Country country) {
         try(Session session=sessionFactory.openSession()){
-            return session.find(Address.class,country);
+            return session.createQuery("select a from Address a where a.country=:country",Address.class).setParameter("country",country).list();
+        }
+    }
+
+    @Override
+    public List<Address> findByCountryAndCity(Country country,City city) {
+        try(Session session=sessionFactory.openSession()){
+            return session.createQuery("select a from Address a where a.country=:country and a.city=:city",Address.class).setParameter("country",country).setParameter("city",city).list();
         }
     }
 

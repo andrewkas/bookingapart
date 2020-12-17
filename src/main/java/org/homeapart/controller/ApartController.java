@@ -1,5 +1,7 @@
 package org.homeapart.controller;
 
+import com.neovisionaries.i18n.CountryCode;
+import com.neovisionaries.i18n.LocaleCode;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.controller.request.ApartCreateRequest;
 import org.homeapart.controller.request.LandlordCreateRequest;
@@ -8,6 +10,9 @@ import org.homeapart.domain.Address;
 import org.homeapart.domain.Apart;
 import org.homeapart.domain.Landlord;
 import org.homeapart.domain.enums.ApartamentStatus;
+import org.homeapart.domain.enums.ApartamentType;
+import org.homeapart.domain.enums.City;
+import org.homeapart.domain.enums.Country;
 import org.homeapart.service.AddressService;
 import org.homeapart.service.ApartService;
 import org.homeapart.service.LandlordService;
@@ -16,7 +21,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/apart")
@@ -39,7 +46,7 @@ public class ApartController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public Apart findApartById(@RequestParam (value="id") Long id) {
+    public Apart findById(@RequestParam (value="id") Long id) {
         return apartService.findById(id);
     }
 
@@ -50,10 +57,24 @@ public class ApartController {
     }
     @GetMapping("/type")
     @ResponseStatus(HttpStatus.OK)
-    public List<Apart> findByType(@RequestParam (value="type") String type){
+    public List<Apart> findByType(@RequestParam (value="type") ApartamentType type){
         return apartService.findByType(type);
     }
 
+    @GetMapping("/address")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Address> findByAddress(@RequestParam Country country, @RequestParam City city){
+        return addressService.findByCountryAndCity(country,city);
+    }
+    @GetMapping("/find")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Address> findForUser(@RequestParam Country country,
+                                     @RequestParam City city,
+                                     @RequestParam Integer questNumber,
+                                     @RequestParam ApartamentType type,
+                                     @RequestParam Double costPerDay){
+        return addressService.findByCountryAndCity(country,city);
+    }
 
 
     @PostMapping ("/add")
@@ -73,7 +94,7 @@ public class ApartController {
         apart.setChanged(new Timestamp(System.currentTimeMillis()));
         apart.setType(apartCreateRequest.getType());
         apart.setGuestNumber(apartCreateRequest.getGuestNumber());
-        apart.setStatus(ApartamentStatus.AVAILABLE);
+        apart.setStatus(apartCreateRequest.getStatus());
 
         return apartService.save(apart);
 
@@ -96,7 +117,7 @@ public class ApartController {
         apart.setChanged(new Timestamp(System.currentTimeMillis()));
         apart.setType(apartCreateRequest.getType());
         apart.setGuestNumber(apartCreateRequest.getGuestNumber());
-        apart.setStatus(ApartamentStatus.AVAILABLE);
+        apart.setStatus(apartCreateRequest.getStatus());
 
         return apartService.save(apart);
 

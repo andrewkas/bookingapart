@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.homeapart.domain.enums.City;
+import org.homeapart.domain.enums.Country;
 
 import javax.persistence.*;
 import java.util.Collections;
@@ -23,12 +25,14 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String country;
+    @Column (name="country")
+    @Enumerated(EnumType.STRING)
+    private Country country;
 
 
-    @Column
-    private String city;
+    @Column (name="city")
+    @Enumerated(EnumType.STRING)
+    private City city;
 
 
     @Column
@@ -38,7 +42,7 @@ public class Address {
     @JsonManagedReference
     private Apart apart;
 
-    public Address(String country, String city, String location) {
+    public Address(Country country, City city, String location) {
         this.country = country;
         this.city = city;
         this.location = location;

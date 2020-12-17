@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.homeapart.domain.enums.ApartamentStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.homeapart.domain.enums.ApartamentType;
 
 import javax.persistence.*;
 import java.math.BigInteger;
@@ -17,7 +18,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@EqualsAndHashCode(exclude = {"address","additionally"})
+@EqualsAndHashCode(exclude = {"address","additionally","landlord"})
 @Table(name = "m_apart")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,8 +28,9 @@ public class Apart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String type;
+    @Column (name="type")
+    @Enumerated(EnumType.STRING)
+    private ApartamentType type;
 
     @Column(name="apart_name")
     private String apartName;
@@ -52,6 +54,7 @@ public class Apart {
     @ManyToOne
     @JoinColumn(name = "landlord_id")
     @JsonBackReference
+
     private Landlord landlord;
 
 

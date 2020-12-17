@@ -1,12 +1,18 @@
 package org.homeapart.repository;
 
 import org.homeapart.domain.Address;
+import org.homeapart.domain.enums.City;
+import org.homeapart.domain.enums.Country;
+
+import java.util.List;
 
 
 public interface AddressRepository extends CrudRepository<Long,Address> {
 
-    Address findByCity(String city);
+    List<Address> findByCity(City city);
 
-    Address findByCountry(String country);
+    List<Address> findByCountry(Country country);
+
+    List<Address> findByCountryAndCity(Country country,City city);
 
 }

@@ -164,6 +164,12 @@
             <artifactId>assertj-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.neovisionaries</groupId>
+            <artifactId>nv-i18n</artifactId>
+            <version>1.27</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
