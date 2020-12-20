@@ -4,13 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.homeapart.controller.request.ApartCreateRequest;
 import org.homeapart.controller.request.LandlordCreateRequest;
 import org.homeapart.controller.request.UserDeleteRequest;
+import org.homeapart.domain.Additionally;
 import org.homeapart.domain.Address;
 import org.homeapart.domain.Apart;
 import org.homeapart.domain.Landlord;
-import org.homeapart.domain.enums.ApartamentStatus;
-import org.homeapart.domain.enums.ApartamentType;
-import org.homeapart.domain.enums.City;
-import org.homeapart.domain.enums.Country;
+import org.homeapart.domain.enums.*;
+import org.homeapart.service.AdditionallyService;
 import org.homeapart.service.AddressService;
 import org.homeapart.service.ApartService;
 import org.homeapart.service.LandlordService;
@@ -34,7 +33,6 @@ public class ApartController {
 
     private final LandlordService landlordService;
 
-  //  private AdditionallyService additionallyService;
 
     @GetMapping("/all")
     public ResponseEntity<Object> findAllApart() {
@@ -64,14 +62,16 @@ public class ApartController {
     public List<Address> findByAddress(@RequestParam Country country, @RequestParam City city){
         return addressService.findByCountryAndCity(country,city);
     }
+
+    //TODO
     @GetMapping("/find")
     @ResponseStatus(HttpStatus.OK)
-    public List<Address> findForUser(@RequestParam Country country,
+    public List<Apart> findForUser(@RequestParam Country country,
                                      @RequestParam City city,
                                      @RequestParam Integer questNumber,
                                      @RequestParam ApartamentType type,
                                      @RequestParam Double costPerDay){
-        return addressService.findByCountryAndCity(country,city);
+        return apartService.findByParam(country,city,questNumber,type,costPerDay);
     }
 
 
@@ -87,7 +87,7 @@ public class ApartController {
         apart.setArea(apartCreateRequest.getArea());
         apart.setCostPerDay(apartCreateRequest.getCostPerDay());
         apart.setLandlord(landlordService.findById(apartCreateRequest.getLandlordId()));
-        //apart.setAdditionally(additionallyService.findAll(apartCreateRequest.getAdditionallySet().getAdditionally));
+        apart.setAdditionally(apartCreateRequest.getAdditionallySet());
         apart.setCreated(new Timestamp((System.currentTimeMillis())));
         apart.setChanged(new Timestamp(System.currentTimeMillis()));
         apart.setType(apartCreateRequest.getType());
@@ -111,7 +111,7 @@ public class ApartController {
         apart.setArea(apartCreateRequest.getArea());
         apart.setCostPerDay(apartCreateRequest.getCostPerDay());
         apart.setLandlord(landlordService.findById(apartCreateRequest.getLandlordId()));
-        //apart.setAdditionally(additionallyService.findAll(apartCreateRequest.getAdditionallySet().getAdditionally));
+        apart.setAdditionally(apartCreateRequest.getAdditionallySet());
         apart.setChanged(new Timestamp(System.currentTimeMillis()));
         apart.setType(apartCreateRequest.getType());
         apart.setGuestNumber(apartCreateRequest.getGuestNumber());

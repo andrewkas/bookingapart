@@ -1,29 +1,40 @@
 package org.homeapart.repository.impl;
 
+
+import lombok.extern.log4j.Log4j2;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.homeapart.domain.Additionally;
-import org.homeapart.domain.Apart;
-import org.homeapart.repository.AdditionallyRepository;
+import org.homeapart.domain.Booking;
+import org.homeapart.repository.BookingRepository;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
+
+
 @Repository
-public class AdditionallyRepositoryImpl implements AdditionallyRepository {
+@Log4j2
+
+public class BookingRepositoryImpl implements BookingRepository {
 
     private SessionFactory sessionFactory;
 
+
+
+    public BookingRepositoryImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
-    public List<Additionally> findByApart(Apart apart) {
+    public List<Booking> findByUserId(Long userId) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("select a from Additionally a where a.apart=:apart", Additionally.class).list();
+            return session.createQuery("select b from Booking b where b.user.id=:userId", Booking.class)
+                    .setParameter("userId",userId).list();
+
         }
     }
 
-
     @Override
-    public Additionally save(Additionally object) {
+    public Booking save(Booking object) {
         try (Session session = sessionFactory.openSession()) {
             session.saveOrUpdate(object);
             return object;
@@ -31,21 +42,21 @@ public class AdditionallyRepositoryImpl implements AdditionallyRepository {
     }
 
     @Override
-    public List<Additionally> findAll() {
+    public List<Booking> findAll() {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("select a from Additionally a", Additionally.class).list();
+            return session.createQuery("select b from Booking b", Booking.class).list();
         }
     }
 
     @Override
-    public Additionally findById(Long key) {
+    public Booking findById(Long key) {
         try (Session session = sessionFactory.openSession()) {
-            return session.find(Additionally.class, key);
+            return session.find(Booking.class, key);
         }
     }
 
     @Override
-    public Additionally update(Additionally object) {
+    public Booking update(Booking object) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.getTransaction();
             transaction.begin();
@@ -56,7 +67,7 @@ public class AdditionallyRepositoryImpl implements AdditionallyRepository {
     }
 
     @Override
-    public Long delete(Additionally object) {
+    public Long delete(Booking object) {
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.getTransaction();
             transaction.begin();

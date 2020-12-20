@@ -1,5 +1,6 @@
 package org.homeapart.service.Impl;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.homeapart.domain.User;
@@ -13,13 +14,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+
 
     @Override
     public List<User> findAll() {

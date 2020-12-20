@@ -5,6 +5,8 @@ import org.homeapart.domain.Apart;
 import org.homeapart.domain.Landlord;
 import org.homeapart.domain.enums.ApartamentStatus;
 import org.homeapart.domain.enums.ApartamentType;
+import org.homeapart.domain.enums.City;
+import org.homeapart.domain.enums.Country;
 import org.homeapart.repository.ApartRepository;
 import org.homeapart.service.ApartService;
 import org.springframework.stereotype.Service;
@@ -59,5 +61,14 @@ public class ApartServiceImpl implements ApartService {
     @Override
     public List<Apart> findApartByLandlord(Landlord landlord) {
         return apartRepository.findByLandlord(landlord);
+    }
+
+    @Override
+    public List<Apart> findByParam(Country country, City city, Integer questNumber, ApartamentType type, Double costPerDay) {
+        return apartRepository.findByParam(country,
+              city,
+            questNumber,
+             type,
+             costPerDay);
     }
 }

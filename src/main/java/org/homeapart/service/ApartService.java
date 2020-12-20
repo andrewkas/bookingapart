@@ -4,6 +4,8 @@ import org.homeapart.domain.Apart;
 import org.homeapart.domain.Landlord;
 import org.homeapart.domain.enums.ApartamentStatus;
 import org.homeapart.domain.enums.ApartamentType;
+import org.homeapart.domain.enums.City;
+import org.homeapart.domain.enums.Country;
 
 import java.util.List;
 
@@ -23,4 +25,10 @@ public interface ApartService {
     Long delete (Apart apart);
 
     List<Apart> findApartByLandlord (Landlord landlord);
+
+    List<Apart> findByParam(Country country,
+                                   City city,
+                                   Integer questNumber,
+                                   ApartamentType type,
+                                   Double costPerDay);
 }

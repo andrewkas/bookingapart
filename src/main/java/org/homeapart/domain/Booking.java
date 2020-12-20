@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Setter
@@ -30,14 +31,13 @@ public class Booking {
     @JsonBackReference
     private User user;
 
-    @Column(name = "number_of_persons")
-    private int numberOfPersons;
 
-    @Column(name = "check_in")
-    private Date checkIn;
+    @Column(name = "date_from")
+    @Temporal(TemporalType.DATE)
+    private Date dateFrom;
 
-    @Column(name = "check_out")
-    private Date checkOut;
+    @Column(name = "date_to")
+    private Date dateTo;
 
     @Column
     private Double price;

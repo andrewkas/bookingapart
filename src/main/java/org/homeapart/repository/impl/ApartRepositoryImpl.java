@@ -9,9 +9,12 @@ import org.homeapart.domain.Apart;
 import org.homeapart.domain.Landlord;
 import org.homeapart.domain.enums.ApartamentStatus;
 import org.homeapart.domain.enums.ApartamentType;
+import org.homeapart.domain.enums.City;
+import org.homeapart.domain.enums.Country;
 import org.homeapart.repository.ApartRepository;
 import org.homeapart.service.AddressService;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -55,7 +58,25 @@ public class ApartRepositoryImpl implements ApartRepository {
   public List<Apart> findByLandlord(Landlord landlord) {
     try (Session session = sessionFactory.openSession()) {
 
-      return session.createQuery("select a from Apart a where a.landlord=:landlord",Apart.class).list();
+      return session.createQuery("select a from Apart a where a.landlord=:landlord",Apart.class).setParameter("landlord",landlord).list();
+    }
+      }
+
+      @Override
+      public List<Apart> findByParam(Country country,
+                                      City city,
+                                     Integer questNumber,
+                                     ApartamentType type,
+                                    Double costPerDay){
+    try(Session session=sessionFactory.openSession()){
+      return session.createQuery("select a from Apart a where a.address.country=:country and a.address.city=:city " +
+              "and a.guestNumber>:questNumber and a.type=:type and a.costPerDay<:costPerDay",Apart.class)
+              .setParameter("country",country)
+              .setParameter("city",city)
+              .setParameter("questNumber",questNumber)
+              .setParameter("type",type)
+              .setParameter("costPerDay",costPerDay)
+              .list();
     }
       }
 

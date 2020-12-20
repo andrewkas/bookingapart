@@ -1,9 +1,10 @@
 package org.homeapart.domain;
 
-import com.sun.istack.NotNull;
 import org.homeapart.domain.enums.Gender;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+//import javax.validation.constraints.Size;
+//import javax.validation.constraints.NotNull;
 
 
 import javax.persistence.*;

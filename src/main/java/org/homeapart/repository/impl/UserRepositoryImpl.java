@@ -1,6 +1,7 @@
 package org.homeapart.repository.impl;
 
-import org.apache.log4j.Logger;
+
+
 import org.homeapart.domain.User;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.Session;
