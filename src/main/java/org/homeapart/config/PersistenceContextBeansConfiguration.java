@@ -28,6 +28,8 @@ public class PersistenceContextBeansConfiguration {
         Properties properties = new Properties();
 
         properties.put("hibernate.show_sql", "true");
+        properties.put("hibernate.format_sql","true");
+        properties.put("hibernate.use_sql_comments","true");
         properties.put("current_session_context_class", "org.springframework.orm.hibernate5.SpringSessionContext");
         return properties;
     }

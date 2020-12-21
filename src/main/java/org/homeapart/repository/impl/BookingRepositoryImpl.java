@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import org.homeapart.domain.Booking;
 import org.homeapart.repository.BookingRepository;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 
@@ -19,7 +20,6 @@ public class BookingRepositoryImpl implements BookingRepository {
     private SessionFactory sessionFactory;
 
 
-
     public BookingRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
@@ -28,7 +28,7 @@ public class BookingRepositoryImpl implements BookingRepository {
     public List<Booking> findByUserId(Long userId) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("select b from Booking b where b.user.id=:userId", Booking.class)
-                    .setParameter("userId",userId).list();
+                    .setParameter("userId", userId).list();
 
         }
     }

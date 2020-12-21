@@ -37,5 +37,6 @@ public class ApplicationBean {
                     .paths(PathSelectors.any())
                     .build();
         }
+
     }
 
