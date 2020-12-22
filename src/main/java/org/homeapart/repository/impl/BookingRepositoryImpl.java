@@ -13,7 +13,7 @@ import java.util.List;
 
 
 @Repository
-@Log4j2
+
 
 public class BookingRepositoryImpl implements BookingRepository {
 

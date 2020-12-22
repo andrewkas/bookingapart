@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.homeapart.controller.request.ApartCreateRequest;
 import org.homeapart.controller.request.LandlordCreateRequest;
 import org.homeapart.controller.request.UserDeleteRequest;
+import org.homeapart.controller.response.ErrorMassages;
 import org.homeapart.domain.Additionally;
 import org.homeapart.domain.Address;
 import org.homeapart.domain.Apart;
@@ -125,8 +126,8 @@ public class ApartController {
     @DeleteMapping ("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Long deleteApart(@PathVariable Long id) {
+        if(apartService.findById(id)==null) throw new IllegalArgumentException("apartments do not exist");
         Apart apart = apartService.findById(id);
-
         return apartService.delete(apart);
     }
 }

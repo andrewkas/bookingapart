@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Repository
-@Log4j2
+
 public class ApartRepositoryImpl implements ApartRepository {
 
   private SessionFactory sessionFactory;

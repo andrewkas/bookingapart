@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-@Log4j2
+
 public class AddressRepositoryImpl implements AddressRepository {
 
     private SessionFactory sessionFactory;
