@@ -10,12 +10,13 @@ public interface CrudRepository <K,V>{
 
         List<V> findAll();
 
-        V findById(K key);
+        Optional<V> findById(K key);
 
        // Optional<V> findOne(K key);
 
         V update(V object);
 
         K delete(V object);
+
     }
 

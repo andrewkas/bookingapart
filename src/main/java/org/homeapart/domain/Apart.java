@@ -2,11 +2,8 @@ package org.homeapart.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.homeapart.domain.enums.ApartamentStatus;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import org.homeapart.domain.enums.ApartamentType;
 
 import javax.persistence.*;
@@ -16,12 +13,11 @@ import java.util.Collections;
 import java.util.Set;
 
 
-@Data
+@Getter
+@Setter
 @Entity
 @EqualsAndHashCode(exclude = {"address","additionally","landlord"})
 @Table(name = "m_apart")
-@AllArgsConstructor
-@NoArgsConstructor
 public class Apart {
 
     @Id
@@ -54,7 +50,6 @@ public class Apart {
     @ManyToOne
     @JoinColumn(name = "landlord_id")
     @JsonBackReference
-
     private Landlord landlord;
 
 
@@ -70,7 +65,11 @@ public class Apart {
     private Timestamp changed;
 
 
-    @OneToMany(mappedBy = "apart", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "apart", cascade = {CascadeType.ALL,
+            CascadeType.PERSIST,
+            CascadeType.MERGE,
+            CascadeType.REFRESH,
+            CascadeType.DETACH}, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonManagedReference
     private Set<Additionally> additionally = Collections.emptySet();
 

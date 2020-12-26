@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 import java.sql.Timestamp;
@@ -41,6 +42,12 @@ public class UserController {
         List<User> all = userService.findAll();
         return new ResponseEntity<>(all, HttpStatus.OK);
     }
+    @GetMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
+    public User findByLogin(@RequestParam(value = "login") String login){
+        return userService.findByLogin(login);
+    }
+
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -111,10 +118,10 @@ public class UserController {
         return userService.update(user);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/id")
     @ResponseStatus(HttpStatus.OK)
-    public Long deleteUser(@RequestBody UserDeleteRequest userDeleteRequest) {
-        User user = userService.findById(userDeleteRequest.getId());
+    public Long deleteUser(@RequestParam (value="id") Long id) {
+        User user = userService.findById(id);
 
         return userService.delete(user);
     }

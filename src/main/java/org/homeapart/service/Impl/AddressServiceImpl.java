@@ -1,6 +1,7 @@
 package org.homeapart.service.Impl;
 
 import org.homeapart.domain.Address;
+import org.homeapart.domain.Apart;
 import org.homeapart.domain.enums.City;
 import org.homeapart.domain.enums.Country;
 import org.homeapart.repository.AddressRepository;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class AddressServiceImpl implements AddressService {
     private final AddressRepository addressRepository;
@@ -30,8 +33,10 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Address findById(Long id) {
-        return addressRepository.findById(id);
+        Optional<Address> optional= addressRepository.findById(id);
+        return optional.orElseGet(optional::orElseThrow);
     }
+
 
     @Override
     public List<Address> findByCity(City city) {

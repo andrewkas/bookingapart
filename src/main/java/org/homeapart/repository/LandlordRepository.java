@@ -10,4 +10,6 @@ public interface LandlordRepository extends CrudRepository<Long,Landlord> {
   //  List<Landlord> search(String query);
 
     Optional<Landlord> findByLogin(String login);
+
+
 }

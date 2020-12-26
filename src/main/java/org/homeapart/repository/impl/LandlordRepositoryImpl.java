@@ -26,7 +26,7 @@ public class LandlordRepositoryImpl implements LandlordRepository {
     @Override
     public Optional<Landlord> findByLogin(String login) {
         try (Session session = sessionFactory.openSession()) {
-            return Optional.of(session.find(Landlord.class, login));
+            return Optional.ofNullable(session.find(Landlord.class, login));
         }
     }
 
@@ -47,10 +47,10 @@ public class LandlordRepositoryImpl implements LandlordRepository {
     }
 
     @Override
-    public Landlord findById(Long key) {
+    public Optional<Landlord> findById(Long key) {
         try (Session session=sessionFactory.openSession()){
 
-        return session.find(Landlord.class,key);
+            return Optional.ofNullable(session.find(Landlord.class, key));
     }
     }
 

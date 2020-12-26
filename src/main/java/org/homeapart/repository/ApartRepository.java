@@ -21,7 +21,7 @@ public interface ApartRepository extends CrudRepository<Long, Apart> {
 
     List <Apart> findByType(ApartamentType type);
 
-    List <Apart> findByLandlord(Landlord landlord);
+    List <Apart> findByLandlordId(Long landlordId);
 
     public List<Apart> findByParam(Country country,
                                    City city,

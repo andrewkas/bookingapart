@@ -6,29 +6,34 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.homeapart.domain.Booking;
+import org.homeapart.domain.User;
 import org.homeapart.repository.BookingRepository;
+import org.homeapart.service.UserService;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
-
-
+@Log4j2
 public class BookingRepositoryImpl implements BookingRepository {
 
     private SessionFactory sessionFactory;
+    private UserService userService;
 
 
-    public BookingRepositoryImpl(SessionFactory sessionFactory) {
+    public BookingRepositoryImpl(SessionFactory sessionFactory, UserService userService) {
         this.sessionFactory = sessionFactory;
+        this.userService = userService;
     }
 
     @Override
     public List<Booking> findByUserId(Long userId) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("select b from Booking b where b.user.id=:userId", Booking.class)
-                    .setParameter("userId", userId).list();
+            User user=userService.findById(userId);
+            return session.createQuery("select b from Booking b where b.user=:user", Booking.class)
+                    .setParameter("user", user).list();
 
         }
     }
@@ -49,9 +54,9 @@ public class BookingRepositoryImpl implements BookingRepository {
     }
 
     @Override
-    public Booking findById(Long key) {
+    public Optional<Booking> findById(Long key) {
         try (Session session = sessionFactory.openSession()) {
-            return session.find(Booking.class, key);
+            return Optional.ofNullable(session.find(Booking.class, key));
         }
     }
 

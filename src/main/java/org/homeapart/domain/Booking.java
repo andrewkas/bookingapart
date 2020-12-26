@@ -2,6 +2,8 @@ package org.homeapart.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,9 +12,9 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Date;
 
-@Setter
-@Getter
+@Data
 @Entity
+@EqualsAndHashCode
 @Table(name = "m_booking")
 public class Booking {
 
@@ -33,7 +35,6 @@ public class Booking {
 
 
     @Column(name = "date_from")
-    @Temporal(TemporalType.DATE)
     private Date dateFrom;
 
     @Column(name = "date_to")

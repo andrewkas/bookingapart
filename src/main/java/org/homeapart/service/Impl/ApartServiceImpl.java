@@ -2,6 +2,7 @@ package org.homeapart.service.Impl;
 
 import lombok.RequiredArgsConstructor;
 import org.homeapart.domain.Apart;
+import org.homeapart.domain.Booking;
 import org.homeapart.domain.Landlord;
 import org.homeapart.domain.enums.ApartamentStatus;
 import org.homeapart.domain.enums.ApartamentType;
@@ -12,6 +13,7 @@ import org.homeapart.service.ApartService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 
@@ -40,7 +42,8 @@ public class ApartServiceImpl implements ApartService {
 
     @Override
     public Apart findById(Long apartId) {
-        return apartRepository.findById(apartId);
+        Optional<Apart> optional= apartRepository.findById(apartId);
+        return optional.orElseGet(optional::orElseThrow);
     }
 
     @Override
@@ -59,8 +62,8 @@ public class ApartServiceImpl implements ApartService {
     }
 
     @Override
-    public List<Apart> findApartByLandlord(Landlord landlord) {
-        return apartRepository.findByLandlord(landlord);
+    public List<Apart> findApartByLandlordId(Long landlordId) {
+        return apartRepository.findByLandlordId(landlordId);
     }
 
     @Override

@@ -8,7 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.homeapart.repository.UserRepository;
-import org.springframework.context.annotation.Primary;
+
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -40,11 +40,15 @@ public class UserRepositoryImpl implements UserRepository {
     public Optional<User> findByLogin(String login) {
         try (
                 Session session=sessionFactory.openSession()){
-           return Optional.of(session.find(User.class,login));
+            User user= session.createQuery("select u from User u where u.login=:login",User.class)
+                   .setParameter("login",login).getSingleResult();
+
+            return Optional.ofNullable(user);
 
 
+    }
+    }
 
-    }}
 
     @Override
     public User save(User object) {
@@ -55,9 +59,10 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User findById(Long key) {
+    public Optional <User> findById(Long key) {
         try(Session session = sessionFactory.openSession()) {
-            return session.find(User.class, key);
+
+            return Optional.ofNullable(session.find(User.class, key));
         }
     }
 

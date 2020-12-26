@@ -24,7 +24,7 @@ public interface ApartService {
 
     Long delete (Apart apart);
 
-    List<Apart> findApartByLandlord (Landlord landlord);
+    List<Apart> findApartByLandlordId(Long landlordId);
 
     List<Apart> findByParam(Country country,
                                    City city,

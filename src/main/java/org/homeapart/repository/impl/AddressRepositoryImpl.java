@@ -11,6 +11,8 @@ import org.homeapart.repository.AddressRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 
 public class AddressRepositoryImpl implements AddressRepository {
@@ -52,9 +54,9 @@ public class AddressRepositoryImpl implements AddressRepository {
     }
 
     @Override
-    public Address findById(Long key) {
+    public Optional<Address> findById(Long key) {
         try(Session session=sessionFactory.openSession()){
-        return session.find(Address.class,key);
+        return Optional.ofNullable(session.find(Address.class,key));
         }
     }
 

@@ -15,5 +15,6 @@ public interface AdditionallyService {
 
     Long delete(Additionally additionally);
 
+    Additionally findById(Long id);
 
 }

@@ -16,9 +16,10 @@ public interface UserService {
 
     User findById(Long userId);
 
-    Optional<User> findByLogin(String login);
+    User findByLogin(String login);
 
     Long delete (User user);
+
 
 }
 

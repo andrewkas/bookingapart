@@ -1,6 +1,8 @@
 package org.homeapart.service.Impl;
 
+import lombok.AllArgsConstructor;
 import org.homeapart.domain.Landlord;
+import org.homeapart.domain.User;
 import org.homeapart.repository.LandlordRepository;
 import org.homeapart.service.LandlordService;
 import org.springframework.stereotype.Repository;
@@ -10,13 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class LandlordServiceImpl implements LandlordService {
 
      private final LandlordRepository landlordRepository;
 
-    public LandlordServiceImpl(LandlordRepository landlordRepository) {
-        this.landlordRepository = landlordRepository;
-    }
 
     @Override
     public List<Landlord> findAll() {
@@ -35,12 +35,15 @@ public class LandlordServiceImpl implements LandlordService {
 
     @Override
     public Landlord findById(Long landlordId) {
-        return landlordRepository.findById(landlordId);
+        Optional<Landlord> optional= landlordRepository.findById(landlordId);
+        return optional.orElseGet(optional::orElseThrow);
     }
 
     @Override
-    public Optional<Landlord> findByLogin(String login) {
-        return landlordRepository.findByLogin(login);
+    public Landlord findByLogin(String login) {
+        Optional<Landlord>optional= landlordRepository.findByLogin(login);
+
+        return optional.orElseGet(optional::orElseThrow);
     }
 
     @Override

@@ -9,10 +9,16 @@ import org.homeapart.repository.AdditionallyRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
+
 @Repository
 public class AdditionallyRepositoryImpl implements AdditionallyRepository {
 
     private SessionFactory sessionFactory;
+
+    public AdditionallyRepositoryImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public List<Additionally> findByApart(Apart apart) {
@@ -38,9 +44,9 @@ public class AdditionallyRepositoryImpl implements AdditionallyRepository {
     }
 
     @Override
-    public Additionally findById(Long key) {
+    public Optional<Additionally> findById(Long key) {
         try (Session session = sessionFactory.openSession()) {
-            return session.find(Additionally.class, key);
+            return Optional.ofNullable(session.find(Additionally.class, key));
         }
     }
 

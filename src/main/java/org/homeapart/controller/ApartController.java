@@ -64,7 +64,6 @@ public class ApartController {
         return addressService.findByCountryAndCity(country,city);
     }
 
-    //TODO
     @GetMapping("/find")
     @ResponseStatus(HttpStatus.OK)
     public List<Apart> findForUser(@RequestParam Country country,

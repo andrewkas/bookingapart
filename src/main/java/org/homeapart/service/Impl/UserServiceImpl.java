@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -38,12 +39,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Long userId) {
-        return userRepository.findById(userId);
+        Optional<User> optional= userRepository.findById(userId);
+        return optional.orElseGet(optional::orElseThrow);
     }
 
     @Override
-    public Optional<User> findByLogin(String login) {
-        return userRepository.findByLogin(login);
+    public User findByLogin(String login) {
+        Optional<User>optional= userRepository.findByLogin(login);
+
+        return optional.orElseGet(optional::orElseThrow);
     }
 
     @Override

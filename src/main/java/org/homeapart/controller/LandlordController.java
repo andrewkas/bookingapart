@@ -1,10 +1,7 @@
 package org.homeapart.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.homeapart.controller.request.LandlordCreateRequest;
-import org.homeapart.controller.request.UserChangeRequest;
-import org.homeapart.controller.request.UserCreateRequest;
-import org.homeapart.controller.request.UserDeleteRequest;
+import org.homeapart.controller.request.*;
 import org.homeapart.domain.Landlord;
 import org.homeapart.domain.User;
 import org.homeapart.repository.LandlordRepository;
@@ -39,17 +36,18 @@ public class LandlordController {
 
         @PostMapping
         @ResponseStatus(HttpStatus.CREATED)
-        public Landlord savingLandlord(@RequestBody LandlordCreateRequest landlordCreateRequest) {
+        public Landlord savingLandlord(@RequestBody LandlordCreateRequest landlordCreateRequest) throws Exception {
             //converters
             Landlord landlord = new Landlord();
-            landlord.setName(landlordCreateRequest.getName());
-            landlord.setSurname(landlordCreateRequest.getSurname());
-            landlord.setCreated(new Timestamp(System.currentTimeMillis()));
-            landlord.setChanged(new Timestamp(System.currentTimeMillis()));
-            landlord.setLogin(landlordCreateRequest.getLogin());
-            landlord.setPassword(landlordCreateRequest.getPassword());
-            landlord.setEmail(landlordCreateRequest.getEmail());
-            landlord.setPhone(landlordCreateRequest.getPhone());
+                landlord.setName(landlordCreateRequest.getName());
+                landlord.setSurname(landlordCreateRequest.getSurname());
+                landlord.setCreated(new Timestamp(System.currentTimeMillis()));
+                landlord.setChanged(new Timestamp(System.currentTimeMillis()));
+                landlord.setLogin(landlordCreateRequest.getLogin());
+                landlord.setPassword(landlordCreateRequest.getPassword());
+                landlord.setEmail(landlordCreateRequest.getEmail());
+                landlord.setPhone(landlordCreateRequest.getPhone());
+
 
             //user.setRoles(Collections.singleton(new HibernateRole("ROLE_ADMIN", user)));
             // user.setRole(new HibernateRole(SystemRoles.ROLE_ADMIN, user));
@@ -80,27 +78,25 @@ public class LandlordController {
 
         @PutMapping
         @ResponseStatus(HttpStatus.OK)
-        public Landlord updateLandlord(@RequestBody LandlordCreateRequest landlordCreateRequest) {
-
-            Landlord landlord = landlordService.findById(landlordCreateRequest.getId());
-
-
-            landlord.setName(landlordCreateRequest.getName());
-            landlord.setSurname(landlordCreateRequest.getSurname());
+        public Landlord updateLandlord(@RequestBody LandlordChangeRequest landlordChangeRequest) {
+            Landlord landlord = landlordService.findById(landlordChangeRequest.getId());
+            landlord.setName(landlordChangeRequest.getName());
+            landlord.setSurname(landlordChangeRequest.getSurname());
             landlord.setChanged(new Timestamp(System.currentTimeMillis()));
-            landlord.setLogin(landlordCreateRequest.getLogin());
-            landlord.setPassword(landlordCreateRequest.getPassword());
-            landlord.setEmail(landlordCreateRequest.getEmail());
-            landlord.setPhone(landlordCreateRequest.getPhone());
+            landlord.setLogin(landlordChangeRequest.getLogin());
+            landlord.setPassword(landlordChangeRequest.getPassword());
+            landlord.setEmail(landlordChangeRequest.getEmail());
+            landlord.setPhone(landlordChangeRequest.getPhone());
 
 
             return landlordService.update(landlord);
         }
 
-        @DeleteMapping
+        @DeleteMapping("/id")
         @ResponseStatus(HttpStatus.OK)
-        public Long deleteLandlord(@RequestBody UserDeleteRequest userDeleteRequest) {
-            Landlord landlord = landlordService.findById(userDeleteRequest.getId());
+        public Long deleteLandlord(@RequestParam (value="id") Long id) {
+            Landlord landlord = landlordService.findById(id);
+
 
             return landlordService.delete(landlord);
         }

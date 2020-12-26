@@ -13,20 +13,24 @@ import org.homeapart.domain.enums.City;
 import org.homeapart.domain.enums.Country;
 import org.homeapart.repository.ApartRepository;
 import org.homeapart.service.AddressService;
+import org.homeapart.service.LandlordService;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-
+@Log4j2
 public class ApartRepositoryImpl implements ApartRepository {
 
   private SessionFactory sessionFactory;
+  private LandlordService landlordService;
 
 
-  public ApartRepositoryImpl(SessionFactory sessionFactory) {
+  public ApartRepositoryImpl(SessionFactory sessionFactory, LandlordService landlordService) {
     this.sessionFactory = sessionFactory;
+    this.landlordService = landlordService;
   }
 
   @Override
@@ -55,10 +59,12 @@ public class ApartRepositoryImpl implements ApartRepository {
   }
 
   @Override
-  public List<Apart> findByLandlord(Landlord landlord) {
+  public List<Apart> findByLandlordId(Long landlordId) {
     try (Session session = sessionFactory.openSession()) {
 
-      return session.createQuery("select a from Apart a where a.landlord=:landlord",Apart.class).setParameter("landlord",landlord).list();
+
+      return session.createQuery("select a from Apart a where a.landlord.id=:landlordId",Apart.class)
+              .setParameter("landlordId",landlordId).list();
     }
       }
 
@@ -96,9 +102,9 @@ public class ApartRepositoryImpl implements ApartRepository {
   }
 
   @Override
-  public Apart findById(Long key) {
+  public Optional<Apart> findById(Long key) {
     try (Session session = sessionFactory.openSession()) {
-      return session.find(Apart.class, key);
+      return Optional.ofNullable(session.find(Apart.class, key));
     }
   }
 

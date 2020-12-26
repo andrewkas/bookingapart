@@ -35,9 +35,11 @@ public class BookingController {
         return new ResponseEntity<>(all, HttpStatus.OK);
     }
 
+   //TODO: search by busy dates for these apartments
 
     @PostMapping("/add")
-    public ResponseEntity createReservation (@RequestBody BookingRequest bookingRequest){
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Booking> createReservation (@RequestBody BookingRequest bookingRequest){
         Booking booking=new Booking();
 
         booking.setUser(userService.findById(bookingRequest.getUserId()));
@@ -48,7 +50,6 @@ public class BookingController {
         booking.setChanged(new Timestamp(System.currentTimeMillis()));
         booking.setPrice(getTime(bookingRequest.getDateFrom(),bookingRequest.getDateTo())
                 *apartService.findById(bookingRequest.getApartId()).getCostPerDay());
-
         return new ResponseEntity<>(bookingService.save(booking),HttpStatus.CREATED);
     }
    private long getTime(Date dateFrom,Date dateTo)  {
