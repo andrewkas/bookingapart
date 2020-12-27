@@ -15,4 +15,7 @@ spring:
 #  file:
 #    name: "log/myapplication.log"
 
+jwtconfig:
+  secret: secrets
+  expiration: 120000
 
