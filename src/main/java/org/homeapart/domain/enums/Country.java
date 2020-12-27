@@ -5,14 +5,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.homeapart.domain.enums.City.*;
+
 public enum Country {
     BELARUS
-
-    ,POLAND
+     ,POLAND
     ,UKRAINE
     ,RUSSIA
     ,USA;
 
+
     }
+
 
 

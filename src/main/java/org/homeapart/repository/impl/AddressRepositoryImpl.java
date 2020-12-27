@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-
+@Log4j2
 public class AddressRepositoryImpl implements AddressRepository {
 
     private SessionFactory sessionFactory;

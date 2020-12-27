@@ -1,5 +1,6 @@
 package org.homeapart.repository.impl;
 
+import lombok.extern.log4j.Log4j2;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Log4j2
 public class AdditionallyRepositoryImpl implements AdditionallyRepository {
 
     private SessionFactory sessionFactory;

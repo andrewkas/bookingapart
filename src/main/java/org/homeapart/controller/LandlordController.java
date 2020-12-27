@@ -3,9 +3,7 @@ package org.homeapart.controller;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.controller.request.*;
 import org.homeapart.domain.Landlord;
-import org.homeapart.domain.User;
-import org.homeapart.repository.LandlordRepository;
-import org.homeapart.repository.UserRepository;
+
 import org.homeapart.service.LandlordService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
