@@ -3,7 +3,9 @@ package org.homeapart.controller;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.controller.request.*;
 import org.homeapart.domain.Landlord;
+import org.homeapart.domain.Role;
 import org.homeapart.domain.User;
+import org.homeapart.domain.enums.SystemRole;
 import org.homeapart.repository.LandlordRepository;
 import org.homeapart.repository.UserRepository;
 import org.homeapart.service.LandlordService;
@@ -47,10 +49,7 @@ public class LandlordController {
                 landlord.setPassword(landlordCreateRequest.getPassword());
                 landlord.setEmail(landlordCreateRequest.getEmail());
                 landlord.setPhone(landlordCreateRequest.getPhone());
-
-
-            //user.setRoles(Collections.singleton(new HibernateRole("ROLE_ADMIN", user)));
-            // user.setRole(new HibernateRole(SystemRoles.ROLE_ADMIN, user));
+                landlord.setLandlordRole(new Role(SystemRole.ROLE_MODERATOR, landlord));
             return landlordService.save(landlord);
 
         }
@@ -61,7 +60,6 @@ public class LandlordController {
                                @RequestBody LandlordCreateRequest landlordCreateRequest) {
 
             Landlord landlord = landlordService.findById(id);
-
             landlord.setName(landlordCreateRequest.getName());
             landlord.setSurname(landlordCreateRequest.getSurname());
             landlord.setCreated(new Timestamp(System.currentTimeMillis()));
@@ -70,9 +68,7 @@ public class LandlordController {
             landlord.setPassword(landlordCreateRequest.getPassword());
             landlord.setEmail(landlordCreateRequest.getEmail());
             landlord.setPhone(landlordCreateRequest.getPhone());
-
-            //user.setRoles(Collections.singleton(new HibernateRole("ROLE_ADMIN", user)));
-            /// user.setRole(new HibernateRole(SystemRoles.ROLE_ADMIN, user));
+            landlord.setLandlordRole(new Role(SystemRole.ROLE_MODERATOR, landlord));
             return landlordService.update(landlord);
         }
 
@@ -87,7 +83,7 @@ public class LandlordController {
             landlord.setPassword(landlordChangeRequest.getPassword());
             landlord.setEmail(landlordChangeRequest.getEmail());
             landlord.setPhone(landlordChangeRequest.getPhone());
-
+            landlord.setLandlordRole(new Role(SystemRole.ROLE_MODERATOR, landlord));
 
             return landlordService.update(landlord);
         }

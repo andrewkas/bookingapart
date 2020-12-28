@@ -24,9 +24,7 @@ public class UserProvider implements UserDetailsService {
 
         @Override
         public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-            Landlord landlord=landlordService.findByLogin(username);
             User user=userService.findByLogin(username);
-
 try{
                 if (user!=null) {
                     return new org.springframework.security.core.userdetails.User(
@@ -35,11 +33,14 @@ try{
                             AuthorityUtils.commaSeparatedStringToAuthorityList(user.getUserRole().toString())
 
                     );
-                } else if (landlord!=null){
-                 return new org.springframework.security.core.userdetails.User(
-                            landlord.getLogin(),
-                            landlord.getPassword(),
-                            AuthorityUtils.commaSeparatedStringToAuthorityList(landlord.getLandlordRole().toString())
+               }
+
+                else if (landlordService.findByLogin(username)!=null){
+                    Landlord landlord=landlordService.findByLogin(username);
+                return new org.springframework.security.core.userdetails.User(
+                           landlord.getLogin(),
+                           landlord.getPassword(),
+                           AuthorityUtils.commaSeparatedStringToAuthorityList(landlord.getLandlordRole().toString())
                     );
 
 

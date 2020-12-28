@@ -4,9 +4,11 @@ import org.homeapart.controller.request.SearchCriteria;
 import org.homeapart.controller.request.UserChangeRequest;
 import org.homeapart.controller.request.UserCreateRequest;
 import org.homeapart.controller.request.UserDeleteRequest;
+import org.homeapart.domain.Role;
 import org.homeapart.domain.User;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.homeapart.domain.enums.SystemRole;
 import org.homeapart.repository.UserRepository;
 import org.homeapart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,7 +63,7 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public User savingUser(@RequestBody UserCreateRequest userCreateRequest) {
-        //converters
+
         User user = new User();
         user.setGender(userCreateRequest.getGender());
         user.setName(userCreateRequest.getName());
@@ -71,9 +74,7 @@ public class UserController {
         user.setLogin(userCreateRequest.getLogin());
         user.setPassword(userCreateRequest.getPassword());
         user.setEmail(userCreateRequest.getEmail());
-
-        //user.setRoles(Collections.singleton(new HibernateRole("ROLE_ADMIN", user)));
-        // user.setRole(new HibernateRole(SystemRoles.ROLE_ADMIN, user));
+        user.setUserRole(new Role(1l,SystemRole.ROLE_USER));
         return userService.save(user);
 
     }
@@ -84,7 +85,6 @@ public class UserController {
                            @RequestBody UserCreateRequest userCreateRequest) {
 
         User user = userService.findById(id);
-
         user.setGender(userCreateRequest.getGender());
         user.setName(userCreateRequest.getName());
         user.setSurname(userCreateRequest.getSurname());
@@ -93,9 +93,7 @@ public class UserController {
         user.setLogin(userCreateRequest.getLogin());
         user.setPassword(userCreateRequest.getPassword());
         user.setEmail(userCreateRequest.getEmail());
-
-        //user.setRoles(Collections.singleton(new HibernateRole("ROLE_ADMIN", user)));
-        /// user.setRole(new HibernateRole(SystemRoles.ROLE_ADMIN, user));
+        user.setUserRole(new Role(1l,SystemRole.ROLE_USER));
         return userService.update(user);
     }
 
@@ -113,7 +111,7 @@ public class UserController {
         user.setLogin(userChangeRequest.getLogin());
         user.setPassword(userChangeRequest.getPassword());
         user.setEmail(userChangeRequest.getEmail());
-
+        user.setUserRole(new Role(1l,SystemRole.ROLE_USER));
 
         return userService.update(user);
     }

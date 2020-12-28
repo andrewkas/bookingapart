@@ -38,7 +38,7 @@ public class AuthenticationController {
         );
         SecurityContextHolder.getContext().setAuthentication(authenticate);
 
-        /*Generate token with answer to user*/
+
         return ResponseEntity.ok(
                 AuthResponse
                         .builder()

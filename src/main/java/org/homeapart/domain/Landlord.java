@@ -57,8 +57,9 @@ public class Landlord {
             fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Apart> apart = Collections.emptySet();
 
-  @Column(name="role")
-  @Enumerated(EnumType.STRING)
-    private SystemRole landlordRole;
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name="role_id")
+    private Role landlordRole;
 
 }

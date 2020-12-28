@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.homeapart.controller.request.LandlordCreateRequest;
 import org.homeapart.controller.request.UserCreateRequest;
 import org.homeapart.domain.Landlord;
+import org.homeapart.domain.Role;
 import org.homeapart.domain.User;
 import org.homeapart.domain.enums.SystemRole;
 import org.homeapart.service.LandlordService;
@@ -45,7 +46,7 @@ public class RegistrationController {
         user.setLogin(userCreateRequest.getLogin());
         user.setPassword(passwordEncoder.encode(userCreateRequest.getPassword()));
         user.setEmail(userCreateRequest.getEmail());
-        user.setUserRole(SystemRole.ROLE_USER);
+        user.setUserRole((new Role(1l,SystemRole.ROLE_USER)));
         User savedUser = userService.save(user);
 
         Map<String, Object> result = new HashMap<>();
@@ -68,7 +69,7 @@ public class RegistrationController {
         landlord.setChanged(new Timestamp(System.currentTimeMillis()));
         landlord.setLogin(landlordCreateRequest.getLogin());
         landlord.setPassword(passwordEncoder.encode(landlordCreateRequest.getPassword()));
-        landlord.setLandlordRole(SystemRole.ROLE_MODERATOR);
+        landlord.setLandlordRole(new Role(2l,SystemRole.ROLE_MODERATOR));
         Landlord savedLandlord = landlordService.save(landlord);
 
         Map<String, Object> result = new HashMap<>();
