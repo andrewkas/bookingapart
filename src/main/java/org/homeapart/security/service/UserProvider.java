@@ -32,15 +32,14 @@ try{
                     return new org.springframework.security.core.userdetails.User(
                             user.getLogin(),
                             user.getPassword(),
-                            user.getRole()
+                            AuthorityUtils.commaSeparatedStringToAuthorityList(user.getUserRole().toString())
+
                     );
                 } else if (landlord!=null){
                  return new org.springframework.security.core.userdetails.User(
                             landlord.getLogin(),
                             landlord.getPassword(),
-                            AuthorityUtils.commaSeparatedStringToAuthorityList(roleRepository.findUserRoles(user.getId())
-                                    .stream().map(Role::getRoleName).map(SystemRoles::name)
-                                    .collect(Collectors.joining(",")))
+                            AuthorityUtils.commaSeparatedStringToAuthorityList(landlord.getLandlordRole().toString())
                     );
 
 
@@ -51,5 +50,5 @@ try{
             }
         }
     }
-    }
-}
+
+

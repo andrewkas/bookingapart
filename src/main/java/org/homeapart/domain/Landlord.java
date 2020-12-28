@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.homeapart.domain.enums.SystemRole;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -56,6 +57,8 @@ public class Landlord {
             fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Apart> apart = Collections.emptySet();
 
-
+  @Column(name="role")
+  @Enumerated(EnumType.STRING)
+    private SystemRole landlordRole;
 
 }

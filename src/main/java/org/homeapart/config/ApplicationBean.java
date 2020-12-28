@@ -24,11 +24,6 @@ public class ApplicationBean {
             return new NamedParameterJdbcTemplate(dataSource);
         }
 
-       /* @Bean
-        public PasswordEncoder passwordEncoder() {
-            return new BCryptPasswordEncoder();
-        }
-*/
         @Bean
         public Docket api() {
             return new Docket(DocumentationType.SWAGGER_2)
