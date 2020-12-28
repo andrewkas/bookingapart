@@ -40,10 +40,9 @@ public class UserRepositoryImpl implements UserRepository {
     public Optional<User> findByLogin(String login) {
         try (
                 Session session=sessionFactory.openSession()){
-            User user= session.createQuery("select u from User u where u.login=:login",User.class)
-                   .setParameter("login",login).getSingleResult();
 
-            return Optional.ofNullable(user);
+            return Optional.ofNullable(session.createQuery("select u from User u where u.login=:login",User.class)
+                    .setParameter("login",login).getSingleResult());
 
 
     }

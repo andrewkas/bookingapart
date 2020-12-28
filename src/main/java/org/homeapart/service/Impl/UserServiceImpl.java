@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -39,15 +40,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(Long userId) {
-        Optional<User> optional= userRepository.findById(userId);
-        return optional.orElseGet(optional::orElseThrow);
+        User user= userRepository.findById(userId).orElseThrow(()->new NoResultException("User with id "+userId+" not found"));
+        return user;
     }
 
     @Override
     public User findByLogin(String login) {
-        Optional<User>optional= userRepository.findByLogin(login);
+        User user= userRepository.findByLogin(login).orElseThrow(()-> new NoResultException("User with login "+login+" not found"));
 
-        return optional.orElseGet(optional::orElseThrow);
+        return user;
     }
 
     @Override
