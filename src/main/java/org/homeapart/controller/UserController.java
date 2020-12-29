@@ -29,6 +29,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
@@ -51,7 +52,7 @@ public class UserController {
     @GetMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public User findByLogin(@RequestParam(value = "login") String login){
-        return userService.findByLogin(login).orElseThrow(()->new NoSuchElementException("User with login "+login+" not found"));
+        return userService.findByLogin(login).orElseThrow(()->new NoResultException("User with login "+login+" not found"));
 
     }
 
@@ -59,7 +60,7 @@ public class UserController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public User findUserById(@PathVariable Long id) {
-       return userService.findById(id).orElseThrow(()->new NoSuchElementException("User with login "+id+" not found"));
+       return userService.findById(id).orElseThrow(()->new NoResultException("User with id "+id+" not found"));
 
     }
 

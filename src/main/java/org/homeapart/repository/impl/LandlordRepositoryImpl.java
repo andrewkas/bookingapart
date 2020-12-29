@@ -26,8 +26,8 @@ public class LandlordRepositoryImpl implements LandlordRepository {
     @Override
     public Optional<Landlord> findByLogin(String login) {
         try (Session session = sessionFactory.openSession()) {
-            return Optional.ofNullable(session.createQuery("select l from Landlord l where l.login=:login",Landlord.class)
-                    .setParameter("login",login).getSingleResult());
+            return session.createQuery("select l from Landlord l where l.login=:login",Landlord.class)
+                    .setParameter("login",login).uniqueResultOptional();
         }
     }
 

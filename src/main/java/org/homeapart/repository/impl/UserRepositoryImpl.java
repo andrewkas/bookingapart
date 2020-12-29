@@ -41,8 +41,8 @@ public class UserRepositoryImpl implements UserRepository {
         try (
                 Session session=sessionFactory.openSession()){
 
-            return Optional.ofNullable(session.createQuery("select u from User u where u.login=:login",User.class)
-                    .setParameter("login",login).getSingleResult());
+            return session.createQuery("select u from User u where u.login=:login",User.class)
+                    .setParameter("login",login).uniqueResultOptional();
 
 
     }
