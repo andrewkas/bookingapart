@@ -11,6 +11,7 @@ import org.homeapart.repository.BookingRepository;
 import org.homeapart.service.UserService;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +32,8 @@ public class BookingRepositoryImpl implements BookingRepository {
     @Override
     public List<Booking> findByUserId(Long userId) {
         try (Session session = sessionFactory.openSession()) {
-            User user=userService.findById(userId);
+            if(!userService.findById(userId).isPresent())throw new EntityNotFoundException("There is no user with id = " + userId);
+            User user=userService.findById(userId).get();
             return session.createQuery("select b from Booking b where b.user=:user", Booking.class)
                     .setParameter("user", user).list();
 

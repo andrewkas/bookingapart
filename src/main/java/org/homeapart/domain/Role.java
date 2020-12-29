@@ -1,5 +1,6 @@
 package org.homeapart.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.homeapart.domain.enums.SystemRole;
 
@@ -46,6 +47,6 @@ public class Role {
 
     @Override
     public String toString() {
-        return "Role" +role;
+        return   ""+role+"";
     }
 }

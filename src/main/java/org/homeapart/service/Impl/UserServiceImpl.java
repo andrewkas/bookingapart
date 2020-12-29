@@ -39,16 +39,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Long userId) {
-        User user= userRepository.findById(userId).orElseThrow(()->new NoResultException("User with id "+userId+" not found"));
-        return user;
+    public Optional<User> findById(Long userId) {
+        return userRepository.findById(userId);
     }
 
     @Override
-    public User findByLogin(String login) {
-        User user= userRepository.findByLogin(login).orElseThrow(()-> new NoResultException("User with login "+login+" not found"));
+    public Optional<User> findByLogin(String login) {
+        return userRepository.findByLogin(login);
 
-        return user;
     }
 
     @Override

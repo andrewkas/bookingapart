@@ -58,7 +58,7 @@ public class Landlord {
     private Set<Apart> apart = Collections.emptySet();
 
     @JsonIgnore
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="role_id")
     private Role landlordRole;
 

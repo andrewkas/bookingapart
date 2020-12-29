@@ -42,7 +42,7 @@ public class BookingController {
     public ResponseEntity<Booking> createReservation (@RequestBody BookingRequest bookingRequest){
         Booking booking=new Booking();
 
-        booking.setUser(userService.findById(bookingRequest.getUserId()));
+        booking.setUser(userService.findById(bookingRequest.getUserId()).get());
         booking.setApart(apartService.findById(bookingRequest.getApartId()));
         booking.setDateFrom(bookingRequest.getDateFrom());
         booking.setDateTo(bookingRequest.getDateTo());

@@ -30,7 +30,6 @@ public class Booking {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference
     private User user;
 
 

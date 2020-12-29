@@ -61,7 +61,8 @@ public class User {
     private Gender gender= Gender.NOT_SELECTED;
 
  @JsonIgnore
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
+
     @JoinColumn(name="role_id")
     private Role userRole;
 

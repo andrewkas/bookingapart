@@ -14,6 +14,7 @@ import org.homeapart.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,9 +28,11 @@ import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 
+import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @RestController
@@ -48,14 +51,16 @@ public class UserController {
     @GetMapping("/login")
     @ResponseStatus(HttpStatus.OK)
     public User findByLogin(@RequestParam(value = "login") String login){
-        return userService.findByLogin(login);
+        return userService.findByLogin(login).orElseThrow(()->new NoSuchElementException("User with login "+login+" not found"));
+
     }
 
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public User findUserById(@PathVariable Long id) {
-        return userService.findById(id);
+       return userService.findById(id).orElseThrow(()->new NoSuchElementException("User with login "+id+" not found"));
+
     }
 
 
@@ -84,7 +89,8 @@ public class UserController {
     public User updateUser(@PathVariable Long id,
                            @RequestBody UserCreateRequest userCreateRequest) {
 
-        User user = userService.findById(id);
+                if(!userService.findById(id).isPresent())throw new EntityNotFoundException("There is no user with id = " + id);
+        User user = userService.findById(id).get();
         user.setGender(userCreateRequest.getGender());
         user.setName(userCreateRequest.getName());
         user.setSurname(userCreateRequest.getSurname());
@@ -100,9 +106,8 @@ public class UserController {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public User updateUser(@RequestBody UserChangeRequest userChangeRequest) {
-
-        User user = userService.findById(userChangeRequest.getId());
-
+        if(!userService.findById(userChangeRequest.getId()).isPresent())throw new EntityNotFoundException("There is no user with id = " + userChangeRequest.getId());
+        User user = userService.findById(userChangeRequest.getId()).get();
         user.setGender(userChangeRequest.getGender());
         user.setName(userChangeRequest.getName());
         user.setSurname(userChangeRequest.getSurname());
@@ -119,7 +124,10 @@ public class UserController {
     @DeleteMapping("/id")
     @ResponseStatus(HttpStatus.OK)
     public Long deleteUser(@RequestParam (value="id") Long id) {
-        User user = userService.findById(id);
+        if(!userService.findById(id).isPresent())
+            throw new EntityNotFoundException("There is no user with id = " + id);
+
+        User user = userService.findById(id).get();
 
         return userService.delete(user);
     }

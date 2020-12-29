@@ -20,28 +20,25 @@ public class UserProvider implements UserDetailsService {
 
         private final UserService userService;
         private final LandlordService landlordService;
-        //private final RoleRepository roleRepository;
+
+
+
 
         @Override
         public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-            User user=userService.findByLogin(username);
+           // Optional<User>optionalUser=userService.findByLogin(username);
+
 try{
-                if (user!=null) {
+            Optional<Landlord>optionalUser=landlordService.findByLogin(username);
+                if (optionalUser.isPresent()) {
+                    Landlord user=optionalUser.get();
                     return new org.springframework.security.core.userdetails.User(
                             user.getLogin(),
                             user.getPassword(),
-                            AuthorityUtils.commaSeparatedStringToAuthorityList(user.getUserRole().toString())
+                            AuthorityUtils.commaSeparatedStringToAuthorityList(user.getLandlordRole().toString())
 
                     );
-               }
 
-                else if (landlordService.findByLogin(username)!=null){
-                    Landlord landlord=landlordService.findByLogin(username);
-                return new org.springframework.security.core.userdetails.User(
-                           landlord.getLogin(),
-                           landlord.getPassword(),
-                           AuthorityUtils.commaSeparatedStringToAuthorityList(landlord.getLandlordRole().toString())
-                    );
 
 
                 }

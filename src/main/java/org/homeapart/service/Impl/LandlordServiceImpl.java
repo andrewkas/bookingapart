@@ -40,10 +40,9 @@ public class LandlordServiceImpl implements LandlordService {
     }
 
     @Override
-    public Landlord findByLogin(String login) {
-        Optional<Landlord>optional= landlordRepository.findByLogin(login);
+    public Optional<Landlord> findByLogin(String login) {
+        return landlordRepository.findByLogin(login);
 
-        return optional.orElseGet(optional::orElseThrow);
     }
 
     @Override

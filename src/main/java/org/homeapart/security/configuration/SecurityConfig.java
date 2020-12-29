@@ -73,10 +73,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/actuator/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/swagger-ui.html#").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .antMatchers("/guest/**").permitAll()
                 .antMatchers("/registration/**").permitAll()
                 .antMatchers("/authentication/**").permitAll()
                 .antMatchers("/user/**").permitAll()
+                .antMatchers("/landlord/**").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
 
 
@@ -86,7 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 
-    @Override
+   /* @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers(
@@ -97,4 +97,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/swagger-ui.html",
                         "/webjars/**");
     }
+
+    */
 }
