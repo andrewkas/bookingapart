@@ -1,7 +1,9 @@
 package org.homeapart.security.configuration;
 
 import lombok.RequiredArgsConstructor;
+import org.homeapart.security.filter.JwtFilter;
 import org.homeapart.security.service.UserProvider;
+import org.homeapart.security.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @RequiredArgsConstructor
 @Configuration
@@ -25,6 +28,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserProvider userProvider;
 
+    //private final TokenUtils tokenUtils;
+
+    private final JwtFilter jwtFilter;
+
 
     @Autowired
     public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder, PasswordEncoder passwordEncoder) throws Exception {
@@ -32,12 +39,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(userProvider)
                 .passwordEncoder(passwordEncoder);
     }
-    //    @Bean
-//    public AuthenticationTokenFilter authenticationTokenFilterBean(AuthenticationManager authenticationManager) throws Exception {
-//        AuthenticationTokenFilter authenticationTokenFilter = new AuthenticationTokenFilter(tokenUtils, userDetailsService);
-//        authenticationTokenFilter.setAuthenticationManager(authenticationManager);
-//        return authenticationTokenFilter;
-//    }
+ //       @Bean
+ //   public JwtFilter jwtFilterBean(AuthenticationManager authenticationManager) throws Exception {
+ //       JwtFilter jwtFilter = new JwtFilter(tokenUtils, userProvider);
+ //       JwtFilter.setAuthenticationManager(authenticationManager);
+ //       return jwtFilter;
+ //   }
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -77,16 +85,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/authentication/**").permitAll()
                 .antMatchers("/user/**").permitAll()
                 .antMatchers("/landlord/**").permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/booking/**").hasRole("MODERATOR")
+                .and()
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
 
 
-                .anyRequest().authenticated();
+        ;
 
     }
 
 
 
-   /* @Override
+    @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
                 .antMatchers(
@@ -98,5 +108,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/webjars/**");
     }
 
-    */
+
 }

@@ -1,11 +1,14 @@
 package org.homeapart.security.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.homeapart.domain.Landlord;
-import org.homeapart.domain.User;
+import org.homeapart.domain.Role;
+import org.homeapart.domain.enums.SystemRole;
 import org.homeapart.service.LandlordService;
 import org.homeapart.service.UserService;
 import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,12 +35,18 @@ try{
             Optional<Landlord>optionalUser=landlordService.findByLogin(username);
                 if (optionalUser.isPresent()) {
                     Landlord user=optionalUser.get();
-                    return new org.springframework.security.core.userdetails.User(
+                    return new User(
                             user.getLogin(),
                             user.getPassword(),
-                            AuthorityUtils.commaSeparatedStringToAuthorityList(user.getLandlordRole().toString())
+                            AuthorityUtils.commaSeparatedStringToAuthorityList(landlordService.findRole(user.getId()).stream()
+                                    .map(Role::getRole)
+                                    .map(SystemRole::name)
+                                    .collect(Collectors.joining(",")))
+                            );
 
-                    );
+                                   // (user.getLandlordRole().toString());
+
+
 
 
 

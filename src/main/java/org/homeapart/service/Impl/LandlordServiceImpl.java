@@ -2,6 +2,7 @@ package org.homeapart.service.Impl;
 
 import lombok.AllArgsConstructor;
 import org.homeapart.domain.Landlord;
+import org.homeapart.domain.Role;
 import org.homeapart.domain.User;
 import org.homeapart.repository.LandlordRepository;
 import org.homeapart.service.LandlordService;
@@ -49,4 +50,7 @@ public class LandlordServiceImpl implements LandlordService {
     public Long delete(Landlord landlord) {
         return landlordRepository.delete(landlord);
     }
+
+    @Override
+    public List<Role> findRole(Long id){return landlordRepository.findRole(id);}
 }

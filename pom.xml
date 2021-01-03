@@ -99,13 +99,13 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
         </dependency>
-<!--
-        <dependency>
+
+        <!--dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>${log4j}</version>
-        </dependency>
--->
+        </dependency-->
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -177,6 +177,7 @@
 
 
     </dependencies>
+
     <build>
         <plugins>
             <plugin>

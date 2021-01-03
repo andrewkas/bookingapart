@@ -1,5 +1,6 @@
 package org.homeapart.controller;
 
+import io.swagger.annotations.Api;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.controller.request.BookingRequest;
@@ -19,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/booking")
+@Api( tags = "BOOKING")
 @RequiredArgsConstructor
 public class BookingController {
 

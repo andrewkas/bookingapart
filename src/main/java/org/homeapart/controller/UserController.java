@@ -1,5 +1,8 @@
 package org.homeapart.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import org.homeapart.controller.request.SearchCriteria;
 import org.homeapart.controller.request.UserChangeRequest;
 import org.homeapart.controller.request.UserCreateRequest;
@@ -38,6 +41,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
+@Api( tags = "USER")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -121,7 +125,8 @@ public class UserController {
 
         return userService.update(user);
     }
-
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Auth-Token", defaultValue = "token", required = true, paramType = "header", dataType = "string")})
     @DeleteMapping("/id")
     @ResponseStatus(HttpStatus.OK)
     public Long deleteUser(@RequestParam (value="id") Long id) {

@@ -1,5 +1,6 @@
 package org.homeapart.controller;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.controller.request.ApartCreateRequest;
 import org.homeapart.controller.request.LandlordCreateRequest;
@@ -25,6 +26,7 @@ import java.util.Locale;
 
 @RestController
 @RequestMapping("/apart")
+@Api( tags = "APARTAMENTS")
 @RequiredArgsConstructor
 public class ApartController {
 

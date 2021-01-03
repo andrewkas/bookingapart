@@ -1,5 +1,6 @@
 package org.homeapart.controller;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.controller.request.*;
 import org.homeapart.domain.Landlord;
@@ -17,6 +18,7 @@ import java.sql.Timestamp;
 import java.util.List;
 @RestController
 @RequestMapping("/landlord")
+@Api( tags = "LANDLORD")
 @RequiredArgsConstructor
 public class LandlordController {
 
