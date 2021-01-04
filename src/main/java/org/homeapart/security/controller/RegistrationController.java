@@ -13,6 +13,7 @@ import org.homeapart.service.LandlordService;
 import org.homeapart.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,28 +37,29 @@ public class RegistrationController {
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/user")
-    public ResponseEntity<Map<String,Object>> registrationUser(@RequestBody UserCreateRequest userCreateRequest){
+    public ResponseEntity<Map<String,Object>> registrationUser(@RequestBody UserCreateRequest userCreateRequest) {
+        String login = userCreateRequest.getLogin();
+        if (!userService.findByLogin(login).isPresent()&&!landlordService.findByLogin(login).isPresent()) {
+            User user = new User();
+            user.setGender(userCreateRequest.getGender());
+            user.setName(userCreateRequest.getName());
+            user.setSurname(userCreateRequest.getSurname());
+            user.setBirthDate(userCreateRequest.getBirthDate());
+            user.setCreated(new Timestamp(System.currentTimeMillis()));
+            user.setChanged(new Timestamp(System.currentTimeMillis()));
+            user.setLogin(login);
+            user.setPassword(passwordEncoder.encode(userCreateRequest.getPassword()));
+            user.setEmail(userCreateRequest.getEmail());
+            user.setUserRole((new Role(1l, SystemRole.ROLE_USER)));
+            User savedUser = userService.save(user);
 
-        User user = new User();
-        user.setGender(userCreateRequest.getGender());
-        user.setName(userCreateRequest.getName());
-        user.setSurname(userCreateRequest.getSurname());
-        user.setBirthDate(userCreateRequest.getBirthDate());
-        user.setCreated(new Timestamp(System.currentTimeMillis()));
-        user.setChanged(new Timestamp(System.currentTimeMillis()));
-        user.setLogin(userCreateRequest.getLogin());
-        user.setPassword(passwordEncoder.encode(userCreateRequest.getPassword()));
-        user.setEmail(userCreateRequest.getEmail());
-        user.setUserRole((new Role(1l,SystemRole.ROLE_USER)));
-        User savedUser = userService.save(user);
+            Map<String, Object> result = new HashMap<>();
 
-        Map<String, Object> result = new HashMap<>();
+            result.put("id", savedUser.getId());
+            result.put("login", savedUser.getLogin());
 
-        result.put("id", savedUser.getId());
-        result.put("login", savedUser.getLogin());
-
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
-
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
+        } else throw new UsernameNotFoundException(String.format("User with login '%s' is present", login));
     }
     @PostMapping("/landlord")
     public ResponseEntity<Map<String,Object>> registrationLandlord(@RequestBody LandlordCreateRequest landlordCreateRequest){

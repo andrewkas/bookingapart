@@ -3,6 +3,7 @@ package org.homeapart.service.Impl;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.homeapart.domain.Role;
 import org.homeapart.domain.User;
 import org.homeapart.repository.UserRepository;
 import org.homeapart.service.UserService;
@@ -53,4 +54,7 @@ public class UserServiceImpl implements UserService {
     public Long delete(User user) {
         return userRepository.delete(user);
     }
+
+    @Override
+    public List<Role> findRole(Long id){return userRepository.findRole(id);}
 }

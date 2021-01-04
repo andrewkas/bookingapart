@@ -1,5 +1,6 @@
 package org.homeapart.service;
 
+import org.homeapart.domain.Role;
 import org.homeapart.domain.User;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public interface UserService {
 
     Long delete (User user);
 
+    List<Role> findRole(Long id);
 
 }
 

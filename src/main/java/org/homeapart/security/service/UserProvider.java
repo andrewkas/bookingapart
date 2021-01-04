@@ -1,7 +1,8 @@
 package org.homeapart.security.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+
+
 import org.homeapart.domain.Landlord;
 import org.homeapart.domain.Role;
 import org.homeapart.domain.enums.SystemRole;
@@ -29,32 +30,36 @@ public class UserProvider implements UserDetailsService {
 
         @Override
         public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-           // Optional<User>optionalUser=userService.findByLogin(username);
 
-try{
-            Optional<Landlord>optionalUser=landlordService.findByLogin(username);
-                if (optionalUser.isPresent()) {
-                    Landlord user=optionalUser.get();
-                    return new User(
+
+           // Optional<User>optionalUser1=userService.findByLogin(username);
+          //  Optional<Landlord>optionalUser=landlordService.findByLogin(username);
+                if (landlordService.findByLogin(username).isPresent()) {
+                    Landlord user = landlordService.findByLogin(username).get();
+                    return new org.springframework.security.core.userdetails.User(
                             user.getLogin(),
                             user.getPassword(),
                             AuthorityUtils.commaSeparatedStringToAuthorityList(landlordService.findRole(user.getId()).stream()
                                     .map(Role::getRole)
                                     .map(SystemRole::name)
                                     .collect(Collectors.joining(",")))
-                            );
-
-
-
-
-
-
+                    );
+                }
+                else if (userService.findByLogin(username).isPresent()){
+                    org.homeapart.domain.User user=userService.findByLogin(username).get();
+                    return new User(
+                            user.getLogin(),
+                            user.getPassword(),
+                            AuthorityUtils.commaSeparatedStringToAuthorityList(userService.findRole(user.getId()).stream()
+                                    .map(Role::getRole)
+                                    .map(SystemRole::name)
+                                    .collect(Collectors.joining(",")))
+                    );
                 }
                 else throw new UsernameNotFoundException(String.format("No user or landlord found with login '%s'.", username));
-            } catch (Exception e) {
-                throw new UsernameNotFoundException("User or landlord with this login not found");
+
             }
         }
-    }
+
 
 

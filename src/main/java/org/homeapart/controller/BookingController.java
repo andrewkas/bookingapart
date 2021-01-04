@@ -12,6 +12,7 @@ import org.homeapart.service.BookingService;
 import org.homeapart.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -33,6 +34,7 @@ public class BookingController {
     private final ApartService apartService;
 
     @GetMapping("/all")
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity<Object> findAll() {
         List<Booking> all = bookingService.findAll();
         return new ResponseEntity<>(all, HttpStatus.OK);
