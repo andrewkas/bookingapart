@@ -1,6 +1,7 @@
 package org.homeapart.security.controller;
 
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.security.model.AuthRequest;
 import org.homeapart.security.model.AuthResponse;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/authentication")
+@Api( tags = "AUTHENTICATION")
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationManager authenticationManager;

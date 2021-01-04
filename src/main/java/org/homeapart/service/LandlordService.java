@@ -14,7 +14,7 @@ public interface LandlordService {
 
     Landlord update(Landlord landlord);
 
-    Landlord findById(Long landlordId);
+    Optional<Landlord> findById(Long landlordId);
 
    Optional<Landlord> findByLogin(String login);
 

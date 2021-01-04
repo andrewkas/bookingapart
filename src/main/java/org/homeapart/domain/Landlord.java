@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.homeapart.domain.enums.SystemRole;
 
 import javax.persistence.*;
@@ -14,6 +16,8 @@ import java.util.Collections;
 import java.util.Set;
 
 @Data
+@Getter
+@Setter
 @Entity
 @EqualsAndHashCode (exclude = {"apart"})
 @Table(name = "m_landlord")

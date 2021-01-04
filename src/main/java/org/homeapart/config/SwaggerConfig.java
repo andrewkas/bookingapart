@@ -39,7 +39,8 @@ public class SwaggerConfig {
             //    .paths(PathSelectors.ant("/apart/**"))
             //    .paths(PathSelectors.ant("/booking/**"))
 
-                .apis(RequestHandlerSelectors.basePackage("org.homeapart.controller"))
+                .apis(RequestHandlerSelectors.basePackage("org.homeapart"))
+
                 .paths(PathSelectors.any())
                 .build();
 

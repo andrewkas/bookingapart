@@ -12,6 +12,7 @@ import org.homeapart.repository.UserRepository;
 import org.homeapart.service.LandlordService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -34,7 +35,7 @@ public class LandlordController {
         @GetMapping("/{id}")
         @ResponseStatus(HttpStatus.OK)
         public Landlord findLandlordById(@PathVariable Long id) {
-            return landlordService.findById(id);
+            return landlordService.findById(id).orElseThrow(()->new UsernameNotFoundException(String.format("No landlord found with id '%d'.", id)));
         }
 
 
@@ -51,7 +52,7 @@ public class LandlordController {
                 landlord.setPassword(landlordCreateRequest.getPassword());
                 landlord.setEmail(landlordCreateRequest.getEmail());
                 landlord.setPhone(landlordCreateRequest.getPhone());
-                landlord.setLandlordRole(new Role(SystemRole.ROLE_MODERATOR, landlord));
+                landlord.setLandlordRole(new Role(2l,SystemRole.ROLE_MODERATOR));
             return landlordService.save(landlord);
 
         }
@@ -61,23 +62,38 @@ public class LandlordController {
         public Landlord updateLandlord(@PathVariable Long id,
                                @RequestBody LandlordCreateRequest landlordCreateRequest) {
 
-            Landlord landlord = landlordService.findById(id);
-            landlord.setName(landlordCreateRequest.getName());
-            landlord.setSurname(landlordCreateRequest.getSurname());
-            landlord.setCreated(new Timestamp(System.currentTimeMillis()));
-            landlord.setChanged(new Timestamp(System.currentTimeMillis()));
-            landlord.setLogin(landlordCreateRequest.getLogin());
-            landlord.setPassword(landlordCreateRequest.getPassword());
-            landlord.setEmail(landlordCreateRequest.getEmail());
-            landlord.setPhone(landlordCreateRequest.getPhone());
-            landlord.setLandlordRole(new Role(SystemRole.ROLE_MODERATOR, landlord));
-            return landlordService.update(landlord);
+            if (landlordService.findById(id).isPresent()) {
+                Landlord landlord = landlordService.findById(id).get();
+                landlord.setName(landlordCreateRequest.getName());
+                landlord.setSurname(landlordCreateRequest.getSurname());
+                landlord.setCreated(new Timestamp(System.currentTimeMillis()));
+                landlord.setChanged(new Timestamp(System.currentTimeMillis()));
+                landlord.setLogin(landlordCreateRequest.getLogin());
+                landlord.setPassword(landlordCreateRequest.getPassword());
+                landlord.setEmail(landlordCreateRequest.getEmail());
+                landlord.setPhone(landlordCreateRequest.getPhone());
+                landlord.setLandlordRole(new Role(2l, SystemRole.ROLE_MODERATOR));
+
+                return landlordService.update(landlord);
+            } else {
+                Landlord landlord = new Landlord();
+                landlord.setName(landlordCreateRequest.getName());
+                landlord.setSurname(landlordCreateRequest.getSurname());
+                landlord.setCreated(new Timestamp(System.currentTimeMillis()));
+                landlord.setChanged(new Timestamp(System.currentTimeMillis()));
+                landlord.setLogin(landlordCreateRequest.getLogin());
+                landlord.setPassword(landlordCreateRequest.getPassword());
+                landlord.setEmail(landlordCreateRequest.getEmail());
+                landlord.setPhone(landlordCreateRequest.getPhone());
+                landlord.setLandlordRole(new Role(2l, SystemRole.ROLE_MODERATOR));
+                return landlordService.save(landlord);
+            }
         }
 
         @PutMapping
         @ResponseStatus(HttpStatus.OK)
         public Landlord updateLandlord(@RequestBody LandlordChangeRequest landlordChangeRequest) {
-            Landlord landlord = landlordService.findById(landlordChangeRequest.getId());
+            Landlord landlord = landlordService.findById(landlordChangeRequest.getId()).orElseThrow(()->new UsernameNotFoundException(String.format("No landlord found with id '%d'.", landlordChangeRequest.getId())));
             landlord.setName(landlordChangeRequest.getName());
             landlord.setSurname(landlordChangeRequest.getSurname());
             landlord.setChanged(new Timestamp(System.currentTimeMillis()));
@@ -85,7 +101,7 @@ public class LandlordController {
             landlord.setPassword(landlordChangeRequest.getPassword());
             landlord.setEmail(landlordChangeRequest.getEmail());
             landlord.setPhone(landlordChangeRequest.getPhone());
-            landlord.setLandlordRole(new Role(SystemRole.ROLE_MODERATOR, landlord));
+            landlord.setLandlordRole(new Role(2l,SystemRole.ROLE_MODERATOR));
 
             return landlordService.update(landlord);
         }
@@ -93,7 +109,7 @@ public class LandlordController {
         @DeleteMapping("/id")
         @ResponseStatus(HttpStatus.OK)
         public Long deleteLandlord(@RequestParam (value="id") Long id) {
-            Landlord landlord = landlordService.findById(id);
+            Landlord landlord = landlordService.findById(id).orElseThrow(()->new UsernameNotFoundException(String.format("No landlord found with id '%d'.", id)));
 
 
             return landlordService.delete(landlord);

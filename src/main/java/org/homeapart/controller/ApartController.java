@@ -88,7 +88,7 @@ public class ApartController {
         apart.setApartName(apartCreateRequest.getApartName());
         apart.setArea(apartCreateRequest.getArea());
         apart.setCostPerDay(apartCreateRequest.getCostPerDay());
-        apart.setLandlord(landlordService.findById(apartCreateRequest.getLandlordId()));
+        apart.setLandlord(landlordService.findById(apartCreateRequest.getLandlordId()).get());
         apart.setAdditionally(apartCreateRequest.getAdditionallySet());
         apart.setCreated(new Timestamp((System.currentTimeMillis())));
         apart.setChanged(new Timestamp(System.currentTimeMillis()));
@@ -112,7 +112,7 @@ public class ApartController {
         apart.setApartName(apartCreateRequest.getApartName());
         apart.setArea(apartCreateRequest.getArea());
         apart.setCostPerDay(apartCreateRequest.getCostPerDay());
-        apart.setLandlord(landlordService.findById(apartCreateRequest.getLandlordId()));
+        apart.setLandlord(landlordService.findById(apartCreateRequest.getLandlordId()).get());
         apart.setAdditionally(apartCreateRequest.getAdditionallySet());
         apart.setChanged(new Timestamp(System.currentTimeMillis()));
         apart.setType(apartCreateRequest.getType());

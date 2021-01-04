@@ -44,7 +44,6 @@ try{
                                     .collect(Collectors.joining(",")))
                             );
 
-                                   // (user.getLandlordRole().toString());
 
 
 

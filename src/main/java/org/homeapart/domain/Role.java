@@ -35,15 +35,7 @@ public class Role {
         this.role = role;
     }
 
-    public Role(SystemRole role, User user) {
-        this.role = role;
-        this.user = user;
-    }
 
-    public Role(SystemRole role, Landlord landlord) {
-        this.role = role;
-        this.landlord = landlord;
-    }
 
     @Override
     public String toString() {

@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.controller.request.BookingRequest;
+import org.homeapart.controller.response.BookingResponce;
 import org.homeapart.domain.Apart;
 import org.homeapart.domain.Booking;
 import org.homeapart.service.ApartService;
@@ -41,18 +42,25 @@ public class BookingController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Booking> createReservation (@RequestBody BookingRequest bookingRequest){
+    public ResponseEntity<BookingResponce> createReservation (@RequestBody BookingRequest bookingRequest){
         Booking booking=new Booking();
 
         booking.setUser(userService.findById(bookingRequest.getUserId()).get());
         booking.setApart(apartService.findById(bookingRequest.getApartId()));
+
         booking.setDateFrom(bookingRequest.getDateFrom());
         booking.setDateTo(bookingRequest.getDateTo());
         booking.setCreated(new Timestamp(System.currentTimeMillis()));
         booking.setChanged(new Timestamp(System.currentTimeMillis()));
         booking.setPrice(getTime(bookingRequest.getDateFrom(),bookingRequest.getDateTo())
                 *apartService.findById(bookingRequest.getApartId()).getCostPerDay());
-        return new ResponseEntity<>(bookingService.save(booking),HttpStatus.CREATED);
+        bookingService.save(booking);
+        return new ResponseEntity<>(new BookingResponce(bookingRequest.getApartId()
+                ,bookingRequest.getUserId()
+                ,getTime(bookingRequest.getDateFrom(),bookingRequest.getDateTo())*apartService.findById(bookingRequest.getApartId()).getCostPerDay()
+                ,bookingRequest.getDateFrom()
+                ,bookingRequest.getDateTo())
+                ,HttpStatus.CREATED);
     }
    private long getTime(Date dateFrom,Date dateTo)  {
         long time=(dateTo.getTime()-dateFrom.getTime());

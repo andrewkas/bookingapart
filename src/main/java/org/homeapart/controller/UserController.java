@@ -122,19 +122,14 @@ public class UserController {
         user.setPassword(userChangeRequest.getPassword());
         user.setEmail(userChangeRequest.getEmail());
         user.setUserRole(new Role(1l,SystemRole.ROLE_USER));
-
         return userService.update(user);
     }
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "Auth-Token", defaultValue = "token", required = true, paramType = "header", dataType = "string")})
+ //   @ApiImplicitParams({
+ //           @ApiImplicitParam(name = "Auth-Token", defaultValue = "token", required = true, paramType = "header", dataType = "string")})
     @DeleteMapping("/id")
     @ResponseStatus(HttpStatus.OK)
     public Long deleteUser(@RequestParam (value="id") Long id) {
-        if(!userService.findById(id).isPresent())
-            throw new EntityNotFoundException("There is no user with id = " + id);
-
-        User user = userService.findById(id).get();
-
+        User user = userService.findById(id).orElseThrow(()->new UsernameNotFoundException(String.format("No user found with id '%d'.", id)));
         return userService.delete(user);
     }
 

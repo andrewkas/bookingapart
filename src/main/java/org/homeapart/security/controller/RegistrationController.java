@@ -1,6 +1,7 @@
 package org.homeapart.security.controller;
 
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.controller.request.LandlordCreateRequest;
 import org.homeapart.controller.request.UserCreateRequest;
@@ -24,6 +25,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/registration")
+@Api( tags = "REGISTRATION")
 @RequiredArgsConstructor
 public class RegistrationController {
 

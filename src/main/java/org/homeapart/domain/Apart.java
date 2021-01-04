@@ -1,6 +1,7 @@
 package org.homeapart.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.homeapart.domain.enums.ApartamentStatus;
@@ -55,6 +56,7 @@ public class Apart {
 
     @Column (name="status")
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     private ApartamentStatus status;
 
     @Column

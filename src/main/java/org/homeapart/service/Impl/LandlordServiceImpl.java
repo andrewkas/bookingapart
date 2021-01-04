@@ -35,9 +35,8 @@ public class LandlordServiceImpl implements LandlordService {
     }
 
     @Override
-    public Landlord findById(Long landlordId) {
-        Optional<Landlord> optional= landlordRepository.findById(landlordId);
-        return optional.orElseGet(optional::orElseThrow);
+    public Optional<Landlord> findById(Long landlordId) {
+        return landlordRepository.findById(landlordId);
     }
 
     @Override
