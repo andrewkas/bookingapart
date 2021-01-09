@@ -1,8 +1,10 @@
 package org.homeapart.controller;
 
+import io.swagger.annotations.Api;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.controller.request.BookingRequest;
+import org.homeapart.controller.response.BookingResponce;
 import org.homeapart.domain.Apart;
 import org.homeapart.domain.Booking;
 import org.homeapart.service.ApartService;
@@ -10,6 +12,7 @@ import org.homeapart.service.BookingService;
 import org.homeapart.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -19,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/booking")
+@Api( tags = "BOOKING")
 @RequiredArgsConstructor
 public class BookingController {
 
@@ -30,6 +34,7 @@ public class BookingController {
     private final ApartService apartService;
 
     @GetMapping("/all")
+    @Secured({"ROLE_ADMIN"})
     public ResponseEntity<Object> findAll() {
         List<Booking> all = bookingService.findAll();
         return new ResponseEntity<>(all, HttpStatus.OK);
@@ -39,18 +44,25 @@ public class BookingController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Booking> createReservation (@RequestBody BookingRequest bookingRequest){
+    public ResponseEntity<BookingResponce> createReservation (@RequestBody BookingRequest bookingRequest){
         Booking booking=new Booking();
 
-        booking.setUser(userService.findById(bookingRequest.getUserId()));
+        booking.setUser(userService.findById(bookingRequest.getUserId()).get());
         booking.setApart(apartService.findById(bookingRequest.getApartId()));
+
         booking.setDateFrom(bookingRequest.getDateFrom());
         booking.setDateTo(bookingRequest.getDateTo());
         booking.setCreated(new Timestamp(System.currentTimeMillis()));
         booking.setChanged(new Timestamp(System.currentTimeMillis()));
         booking.setPrice(getTime(bookingRequest.getDateFrom(),bookingRequest.getDateTo())
                 *apartService.findById(bookingRequest.getApartId()).getCostPerDay());
-        return new ResponseEntity<>(bookingService.save(booking),HttpStatus.CREATED);
+        bookingService.save(booking);
+        return new ResponseEntity<>(new BookingResponce(bookingRequest.getApartId()
+                ,bookingRequest.getUserId()
+                ,getTime(bookingRequest.getDateFrom(),bookingRequest.getDateTo())*apartService.findById(bookingRequest.getApartId()).getCostPerDay()
+                ,bookingRequest.getDateFrom()
+                ,bookingRequest.getDateTo())
+                ,HttpStatus.CREATED);
     }
    private long getTime(Date dateFrom,Date dateTo)  {
         long time=(dateTo.getTime()-dateFrom.getTime());

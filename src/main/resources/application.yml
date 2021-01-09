@@ -8,11 +8,8 @@ spring:
     password: postgres
     url: "jdbc:postgresql://localhost:5432/booking_base?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
     driver-class-name: org.postgresql.Driver
-#logging:
-#  level:
-#    org.springframework.web: "debug"
-#    org.hibernate: "error"
-#  file:
-#    name: "log/myapplication.log"
 
+jwtconfig:
+  secret: secrets
+  expiration: 300000
 

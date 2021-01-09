@@ -1,5 +1,6 @@
 package org.homeapart.controller;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.controller.request.ApartCreateRequest;
 import org.homeapart.controller.request.LandlordCreateRequest;
@@ -25,6 +26,7 @@ import java.util.Locale;
 
 @RestController
 @RequestMapping("/apart")
+@Api( tags = "APARTAMENTS")
 @RequiredArgsConstructor
 public class ApartController {
 
@@ -86,7 +88,7 @@ public class ApartController {
         apart.setApartName(apartCreateRequest.getApartName());
         apart.setArea(apartCreateRequest.getArea());
         apart.setCostPerDay(apartCreateRequest.getCostPerDay());
-        apart.setLandlord(landlordService.findById(apartCreateRequest.getLandlordId()));
+        apart.setLandlord(landlordService.findById(apartCreateRequest.getLandlordId()).get());
         apart.setAdditionally(apartCreateRequest.getAdditionallySet());
         apart.setCreated(new Timestamp((System.currentTimeMillis())));
         apart.setChanged(new Timestamp(System.currentTimeMillis()));
@@ -110,7 +112,7 @@ public class ApartController {
         apart.setApartName(apartCreateRequest.getApartName());
         apart.setArea(apartCreateRequest.getArea());
         apart.setCostPerDay(apartCreateRequest.getCostPerDay());
-        apart.setLandlord(landlordService.findById(apartCreateRequest.getLandlordId()));
+        apart.setLandlord(landlordService.findById(apartCreateRequest.getLandlordId()).get());
         apart.setAdditionally(apartCreateRequest.getAdditionallySet());
         apart.setChanged(new Timestamp(System.currentTimeMillis()));
         apart.setType(apartCreateRequest.getType());

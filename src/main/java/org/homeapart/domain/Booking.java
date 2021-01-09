@@ -25,12 +25,10 @@ public class Booking {
 
     @OneToOne
     @JoinColumn(name = "apart_id")
-    @JsonBackReference
     private Apart apart;
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference
     private User user;
 
 

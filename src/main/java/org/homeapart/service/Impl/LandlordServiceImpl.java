@@ -2,6 +2,7 @@ package org.homeapart.service.Impl;
 
 import lombok.AllArgsConstructor;
 import org.homeapart.domain.Landlord;
+import org.homeapart.domain.Role;
 import org.homeapart.domain.User;
 import org.homeapart.repository.LandlordRepository;
 import org.homeapart.service.LandlordService;
@@ -34,20 +35,21 @@ public class LandlordServiceImpl implements LandlordService {
     }
 
     @Override
-    public Landlord findById(Long landlordId) {
-        Optional<Landlord> optional= landlordRepository.findById(landlordId);
-        return optional.orElseGet(optional::orElseThrow);
+    public Optional<Landlord> findById(Long landlordId) {
+        return landlordRepository.findById(landlordId);
     }
 
     @Override
-    public Landlord findByLogin(String login) {
-        Optional<Landlord>optional= landlordRepository.findByLogin(login);
+    public Optional<Landlord> findByLogin(String login) {
+        return landlordRepository.findByLogin(login);
 
-        return optional.orElseGet(optional::orElseThrow);
     }
 
     @Override
     public Long delete(Landlord landlord) {
         return landlordRepository.delete(landlord);
     }
+
+    @Override
+    public List<Role> findRole(Long id){return landlordRepository.findRole(id);}
 }

@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.homeapart.domain.Landlord;
+import org.homeapart.domain.Role;
 import org.homeapart.domain.User;
 import org.homeapart.repository.LandlordRepository;
 import org.springframework.context.annotation.Primary;
@@ -26,7 +27,8 @@ public class LandlordRepositoryImpl implements LandlordRepository {
     @Override
     public Optional<Landlord> findByLogin(String login) {
         try (Session session = sessionFactory.openSession()) {
-            return Optional.ofNullable(session.find(Landlord.class, login));
+            return session.createQuery("select l from Landlord l where l.login=:login",Landlord.class)
+                    .setParameter("login",login).uniqueResultOptional();
         }
     }
 
@@ -73,5 +75,12 @@ public class LandlordRepositoryImpl implements LandlordRepository {
                 transaction.commit();
                 return object.getId();
             }
+        }
+    @Override
+        public List<Role> findRole(Long id){
+        try (Session session=sessionFactory.openSession()){
+           return session.createQuery("select l.landlordRole from Landlord l where l.id=:id",Role.class)
+                    .setParameter("id",id).list();
+        }
         }
     }

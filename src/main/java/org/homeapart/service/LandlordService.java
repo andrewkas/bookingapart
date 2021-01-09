@@ -2,6 +2,7 @@ package org.homeapart.service;
 
 
 import org.homeapart.domain.Landlord;
+import org.homeapart.domain.Role;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,9 +14,11 @@ public interface LandlordService {
 
     Landlord update(Landlord landlord);
 
-    Landlord findById(Long landlordId);
+    Optional<Landlord> findById(Long landlordId);
 
-   Landlord findByLogin(String login);
+   Optional<Landlord> findByLogin(String login);
 
     Long delete (Landlord landlord);
+
+    List<Role> findRole(Long id);
 }
