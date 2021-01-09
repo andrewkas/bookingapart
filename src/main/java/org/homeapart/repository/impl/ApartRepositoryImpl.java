@@ -28,6 +28,7 @@ public class ApartRepositoryImpl implements ApartRepository {
   private LandlordService landlordService;
 
 
+
   public ApartRepositoryImpl(SessionFactory sessionFactory, LandlordService landlordService) {
     this.sessionFactory = sessionFactory;
     this.landlordService = landlordService;

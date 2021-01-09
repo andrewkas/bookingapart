@@ -3,6 +3,7 @@ package org.homeapart.controller;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.domain.Additionally;
 import org.homeapart.domain.Apart;
+import org.homeapart.domain.enums.AdditionallyList;
 import org.homeapart.service.AdditionallyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,17 @@ public class AdditionallyController {
 
     @GetMapping
     public ResponseEntity<Object> findAll() {
-        List<Additionally> all = additionallyService.findAll();
-        return new ResponseEntity<>(all, HttpStatus.OK);
+        return new ResponseEntity<>(additionallyService.findAll(), HttpStatus.OK);
     }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Additionally savingAdditionally(@RequestParam AdditionallyList additionallyList){
+        Additionally addition=new Additionally();
+        addition.setAdditionally(additionallyList);
+        return additionallyService.save(addition);
+    }
+
     @DeleteMapping ("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Long deleteAdditionally(@PathVariable Long id) {

@@ -2,6 +2,7 @@ package org.homeapart.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.homeapart.domain.enums.ApartamentStatus;
@@ -67,12 +68,8 @@ public class Apart {
     private Timestamp changed;
 
 
-    @OneToMany(mappedBy = "apart", cascade = {CascadeType.ALL,
-            CascadeType.PERSIST,
-            CascadeType.MERGE,
-            CascadeType.REFRESH,
-            CascadeType.DETACH}, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JsonManagedReference
+    @ManyToMany(mappedBy = "apart", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+   @JsonIgnoreProperties("apart")
     private Set<Additionally> additionally = Collections.emptySet();
 
 }

@@ -25,7 +25,8 @@ public class AdditionallyRepositoryImpl implements AdditionallyRepository {
     @Override
     public List<Additionally> findByApart(Apart apart) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("select a from Additionally a where a.apart=:apart", Additionally.class).list();
+            return session.createQuery("select a from Additionally a where a.apart=:apart", Additionally.class)
+                    .setParameter("apart",apart).list();
         }
     }
 

@@ -53,11 +53,7 @@ public class Landlord {
 
     @JsonIgnore
     @OneToMany(mappedBy = "landlord",
-            cascade = {CascadeType.ALL,
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE,
-                    CascadeType.REFRESH,
-                    CascadeType.DETACH},
+            cascade = CascadeType.ALL,
             fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Apart> apart = Collections.emptySet();
 
