@@ -1,21 +1,24 @@
 package org.homeapart.security.controller;
 
 
+import io.jsonwebtoken.impl.DefaultClaims;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.security.model.AuthRequest;
 import org.homeapart.security.model.AuthResponse;
 import org.homeapart.security.service.UserProvider;
+import org.homeapart.security.util.CustomHeaders;
 import org.homeapart.security.util.TokenUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/authentication")
@@ -50,6 +53,14 @@ public class AuthenticationController {
         );
     }
 
+ //   @GetMapping("/refreshtoken")
+ //   public ResponseEntity<?> refreshtoken(HttpServletRequest request) throws Exception {
+ //       String refreshToken = request.getHeader(CustomHeaders.AUTH_HEADER);
+ //       return ResponseEntity.ok (AuthResponse.builder()
+ //
+ //               .token(tokenUtils.refreshToken(refreshToken))
+ //               .build());
+ //   }
 
+    }
 
-}
