@@ -1,6 +1,19 @@
-create table if not exists m_address
+create table m_additionally
 (
-    id serial not null
+    id bigserial not null
+        constraint m_additionally_pk
+            primary key,
+    additionally varchar(50) default 'ADDITIONALLY'::character varying not null
+);
+
+alter table m_additionally owner to postgres;
+
+create unique index m_additionally_id_uindex
+    on m_additionally (id);
+
+create table m_address
+(
+    id bigserial not null
         constraint m_address_pk
             primary key,
     country varchar(200) not null,
@@ -10,13 +23,13 @@ create table if not exists m_address
 
 alter table m_address owner to postgres;
 
-create index if not exists m_address_country_city_index
+create index m_address_country_city_index
     on m_address (country, city);
 
-create index if not exists m_address_country_index
+create index m_address_country_index
     on m_address (country);
 
-create table if not exists m_role
+create table m_role
 (
     id bigserial not null
         constraint m_role_pk
@@ -26,7 +39,7 @@ create table if not exists m_role
 
 alter table m_role owner to postgres;
 
-create table if not exists m_user
+create table m_user
 (
     id bigserial not null
         constraint m_user_pk
@@ -47,16 +60,16 @@ create table if not exists m_user
 
 alter table m_user owner to postgres;
 
-create unique index if not exists m_user_id_uindex
+create unique index m_user_id_uindex
     on m_user (id);
 
-create index if not exists m_user_name_index
+create index m_user_name_index
     on m_user (name);
 
-create unique index if not exists m_user_login_uindex
+create unique index m_user_login_uindex
     on m_user (login);
 
-create table if not exists m_landlord
+create table m_landlord
 (
     id bigserial not null
         constraint m_landlord_pk
@@ -76,16 +89,16 @@ create table if not exists m_landlord
 
 alter table m_landlord owner to postgres;
 
-create unique index if not exists m_landlord_id_uindex
+create unique index m_landlord_id_uindex
     on m_landlord (id);
 
-create unique index if not exists m_landlord_login_uindex
+create unique index m_landlord_login_uindex
     on m_landlord (login);
 
-create index if not exists m_landlord_name_index
+create index m_landlord_name_index
     on m_landlord (name);
 
-create table if not exists m_apart
+create table m_apart
 (
     id bigserial not null
         constraint m_apart_pk
@@ -110,42 +123,25 @@ create table if not exists m_apart
 
 alter table m_apart owner to postgres;
 
-create unique index if not exists m_apart_id_uindex
+create unique index m_apart_id_uindex
     on m_apart (id);
 
-create index if not exists m_apart_type_index
+create index m_apart_type_index
     on m_apart (type);
 
-create index if not exists m_apart_city_index
+create index m_apart_city_index
     on m_apart (address_id);
 
-create index if not exists m_apart_guest_number_index
+create index m_apart_guest_number_index
     on m_apart (guest_number);
 
-create index if not exists m_apart_cost_per_day_index
+create index m_apart_cost_per_day_index
     on m_apart (cost_per_day);
 
-create unique index if not exists m_apart_id_uindex_2
+create unique index m_apart_id_uindex_2
     on m_apart (id);
 
-create table if not exists m_additionally
-(
-    id bigserial not null
-        constraint m_additionally_pk
-            primary key,
-    additionally varchar(50) default 'ADDITIONALLY'::character varying not null,
-    apart_id integer not null
-        constraint m_additionally_m_apart_id_fk
-            references m_apart
-            on delete set null
-);
-
-alter table m_additionally owner to postgres;
-
-create unique index if not exists m_additionally_id_uindex
-    on m_additionally (id);
-
-create table if not exists m_booking
+create table m_booking
 (
     id bigserial not null
         constraint m_booking_pk
@@ -166,12 +162,30 @@ create table if not exists m_booking
 
 alter table m_booking owner to postgres;
 
-create unique index if not exists m_booking_id_uindex
+create unique index m_booking_id_uindex
     on m_booking (id);
 
-create unique index if not exists m_role_id_uindex
+create unique index m_role_id_uindex
     on m_role (id);
 
-create unique index if not exists m_role_role_name_uindex
+create unique index m_role_role_name_uindex
     on m_role (role_name);
+
+create table l_apart_additionally
+(
+    id bigserial not null
+        constraint l_apart_additionally_pk
+            primary key,
+    apart_id bigint not null
+        constraint l_apart_additionally_m_apart_id_fk
+            references m_apart,
+    additionally_id bigint not null
+        constraint l_apart_additionally_m_additionally_id_fk
+            references m_additionally
+);
+
+alter table l_apart_additionally owner to postgres;
+
+create unique index l_apart_additionally_id_uindex
+    on l_apart_additionally (id);
 

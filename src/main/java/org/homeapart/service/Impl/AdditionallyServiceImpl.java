@@ -2,11 +2,9 @@ package org.homeapart.service.Impl;
 
 import org.homeapart.domain.Additionally;
 import org.homeapart.domain.Apart;
-import org.homeapart.domain.Booking;
 import org.homeapart.repository.AdditionallyRepository;
 import org.homeapart.service.AdditionallyService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 

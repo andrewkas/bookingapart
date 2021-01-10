@@ -1,7 +1,6 @@
 package org.homeapart.service;
 
 import org.homeapart.domain.Additionally;
-import org.homeapart.domain.Address;
 import org.homeapart.domain.Apart;
 
 import java.util.List;

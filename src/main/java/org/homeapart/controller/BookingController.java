@@ -1,24 +1,23 @@
 package org.homeapart.controller;
 
 import io.swagger.annotations.Api;
-import lombok.Data;
+
 import lombok.RequiredArgsConstructor;
+import org.homeapart.controller.request.BookingChangeRequest;
 import org.homeapart.controller.request.BookingRequest;
 import org.homeapart.controller.response.BookingResponce;
-import org.homeapart.domain.Apart;
 import org.homeapart.domain.Booking;
 import org.homeapart.service.ApartService;
 import org.homeapart.service.BookingService;
 import org.homeapart.service.UserService;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.Timestamp;
-import java.util.Date;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+
 
 @RestController
 @RequestMapping("/booking")
@@ -33,6 +32,8 @@ public class BookingController {
 
     private final ApartService apartService;
 
+    private final ConversionService conversionService;
+
     @GetMapping("/all")
     @Secured({"ROLE_ADMIN"})
     public ResponseEntity<Object> findAll() {
@@ -42,38 +43,40 @@ public class BookingController {
 
    //TODO: search by busy dates for these apartments
 
-    @PostMapping("/add")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<BookingResponce> createReservation (@RequestBody BookingRequest bookingRequest){
-        Booking booking=new Booking();
-
-        booking.setUser(userService.findById(bookingRequest.getUserId()).get());
-        booking.setApart(apartService.findById(bookingRequest.getApartId()));
-
-        booking.setDateFrom(bookingRequest.getDateFrom());
-        booking.setDateTo(bookingRequest.getDateTo());
-        booking.setCreated(new Timestamp(System.currentTimeMillis()));
-        booking.setChanged(new Timestamp(System.currentTimeMillis()));
-        booking.setPrice(getTime(bookingRequest.getDateFrom(),bookingRequest.getDateTo())
-                *apartService.findById(bookingRequest.getApartId()).getCostPerDay());
+        Booking booking= conversionService.convert(bookingRequest,Booking.class);
         bookingService.save(booking);
-        return new ResponseEntity<>(new BookingResponce(bookingRequest.getApartId()
-                ,bookingRequest.getUserId()
-                ,getTime(bookingRequest.getDateFrom(),bookingRequest.getDateTo())*apartService.findById(bookingRequest.getApartId()).getCostPerDay()
-                ,bookingRequest.getDateFrom()
-                ,bookingRequest.getDateTo())
+        return new ResponseEntity<>(new BookingResponce(
+                apartService.findById(booking.getApart().getId()).get()
+                ,userService.findById(booking.getUser().getId()).get()
+                ,booking.getPrice()
+                ,booking.getDateFrom()
+                ,booking.getDateTo())
                 ,HttpStatus.CREATED);
     }
-   private long getTime(Date dateFrom,Date dateTo)  {
-        long time=(dateTo.getTime()-dateFrom.getTime());
-        return TimeUnit.DAYS.convert(time, TimeUnit.MILLISECONDS);
 
-   }
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<BookingResponce> updateReservation(@RequestParam BookingChangeRequest bookingChangeRequest){
+        Booking booking=conversionService.convert(bookingChangeRequest,Booking.class);
+        bookingService.update(booking);
+        return new ResponseEntity<>(new BookingResponce(
+                apartService.findById(booking.getApart().getId()).get()
+                ,userService.findById(booking.getUser().getId()).get()
+                ,booking.getPrice()
+                ,booking.getDateFrom()
+                ,booking.getDateTo())
+                ,HttpStatus.OK);
+
+    }
+
+
    @DeleteMapping("/delete/{id}")
    @ResponseStatus(HttpStatus.OK)
    public Long deleteBooking(@PathVariable Long id) {
-       if(bookingService.findById(id)==null) throw new IllegalArgumentException("booking do not exist");
-       Booking booking = bookingService.findById(id);
+       Booking booking = bookingService.findById(id).orElseThrow(()->new EntityNotFoundException("Booking with id "+id+" not found"));
        return bookingService.delete(booking);
    }
 

@@ -1,12 +1,10 @@
 package org.homeapart.service.Impl;
 
 import org.homeapart.domain.Address;
-import org.homeapart.domain.Apart;
 import org.homeapart.domain.enums.City;
 import org.homeapart.domain.enums.Country;
 import org.homeapart.repository.AddressRepository;
 import org.homeapart.service.AddressService;
-import org.springframework.beans.CachedIntrospectionResults;
 import org.springframework.stereotype.Service;
 
 

@@ -3,7 +3,6 @@ package org.homeapart.service;
 
 import org.homeapart.domain.Landlord;
 import org.homeapart.domain.Role;
-
 import java.util.List;
 import java.util.Optional;
 

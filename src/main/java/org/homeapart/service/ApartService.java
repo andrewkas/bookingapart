@@ -1,14 +1,13 @@
 package org.homeapart.service;
 
 import org.homeapart.domain.Apart;
-import org.homeapart.domain.Landlord;
 import org.homeapart.domain.enums.ApartamentStatus;
 import org.homeapart.domain.enums.ApartamentType;
 import org.homeapart.domain.enums.City;
 import org.homeapart.domain.enums.Country;
 import org.springframework.cache.annotation.Cacheable;
-
 import java.util.List;
+import java.util.Optional;
 
 public interface ApartService {
 
@@ -20,7 +19,7 @@ public interface ApartService {
     Apart update(Apart apart);
 
     @Cacheable("apart")
-    Apart findById(Long apartId);
+     Optional<Apart> findById(Long apartId);
 
     @Cacheable("apart")
     List <Apart> findByType(ApartamentType type);

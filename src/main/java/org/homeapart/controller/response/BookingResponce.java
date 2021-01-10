@@ -2,6 +2,8 @@ package org.homeapart.controller.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.homeapart.domain.Apart;
+import org.homeapart.domain.User;
 
 import java.util.Date;
 
@@ -9,9 +11,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class BookingResponce {
 
-    private Long apartId;
+    private Apart apart;
 
-    private Long userId;
+    private User user;
 
     private Double price;
 

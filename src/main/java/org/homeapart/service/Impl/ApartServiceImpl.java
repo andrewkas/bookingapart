@@ -1,9 +1,6 @@
 package org.homeapart.service.Impl;
 
-import lombok.RequiredArgsConstructor;
 import org.homeapart.domain.Apart;
-import org.homeapart.domain.Booking;
-import org.homeapart.domain.Landlord;
 import org.homeapart.domain.enums.ApartamentStatus;
 import org.homeapart.domain.enums.ApartamentType;
 import org.homeapart.domain.enums.City;
@@ -41,9 +38,8 @@ public class ApartServiceImpl implements ApartService {
     }
 
     @Override
-    public Apart findById(Long apartId) {
-        Optional<Apart> optional= apartRepository.findById(apartId);
-        return optional.orElseGet(optional::orElseThrow);
+    public Optional<Apart> findById(Long apartId) {
+        return apartRepository.findById(apartId);
     }
 
     @Override

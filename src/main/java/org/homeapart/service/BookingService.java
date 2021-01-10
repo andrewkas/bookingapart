@@ -1,8 +1,6 @@
 package org.homeapart.service;
 
 import org.homeapart.domain.Booking;
-import org.homeapart.domain.User;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -13,7 +11,7 @@ public interface BookingService {
 
     Booking update(Booking booking);
 
-    Booking findById(Long bookingId);
+    Optional<Booking> findById(Long bookingId);
 
     Long delete (Booking booking);
 

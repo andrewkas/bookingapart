@@ -92,11 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/landlord/**").hasRole("USER")
                 .antMatchers("/booking/**").hasAnyRole("USER","MODERATOR","ADMIN")
                 .and()
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-
-
-        ;
-
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
 

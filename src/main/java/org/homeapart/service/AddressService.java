@@ -3,7 +3,6 @@ package org.homeapart.service;
 import org.homeapart.domain.Address;
 import org.homeapart.domain.enums.City;
 import org.homeapart.domain.enums.Country;
-
 import java.util.List;
 
 public interface AddressService {

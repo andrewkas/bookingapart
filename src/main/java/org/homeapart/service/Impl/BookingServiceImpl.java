@@ -1,14 +1,10 @@
 package org.homeapart.service.Impl;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.homeapart.domain.Booking;
-import org.homeapart.domain.User;
 import org.homeapart.repository.BookingRepository;
 import org.homeapart.service.BookingService;
-import org.homeapart.service.UserService;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -36,9 +32,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking findById(Long bookingId) {
-        Optional<Booking> optional= bookingRepository.findById(bookingId);
-        return optional.orElseGet(optional::orElseThrow);
+    public Optional<Booking> findById(Long bookingId) {
+        return bookingRepository.findById(bookingId);
     }
 
     @Override

@@ -1,8 +1,13 @@
 package org.homeapart.config;
 
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -23,7 +28,6 @@ public class PersistenceContextBeansConfiguration {
         return sf;
     }
 
-
     private Properties getAdditionalProperties() {
         Properties properties = new Properties();
 
@@ -37,10 +41,10 @@ public class PersistenceContextBeansConfiguration {
         properties.put("hibernate.connection.useUnicode", "true");
         properties.put("current_session_context_class", "org.springframework.orm.hibernate5.SpringSessionContext");
         properties.put("hibernate.javax.cache.provider", "org.ehcache.jsr107.EhcacheCachingProvider");
-        properties.put("hibernate.cache.region.factory_class", "org.hibernate.cache.ehcache.EhCacheRegionFactory");
-        properties.put("hibernate.cache.use_second_level_cache", "true");
-        properties.put("hibernate.cache.ehcache.missing_cache_strategy", "create");
-        properties.put("hibernate.cache.use_query_cache", "true");
+      //  properties.put("hibernate.cache.region.factory_class", "org.hibernate.cache.ehcache.EhCacheRegionFactory");
+      //  properties.put("hibernate.cache.use_second_level_cache", "true");
+      //  properties.put("hibernate.cache.ehcache.missing_cache_strategy", "create");
+      //  properties.put("hibernate.cache.use_query_cache", "true");
         return properties;
     }
 }

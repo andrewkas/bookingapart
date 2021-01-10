@@ -3,12 +3,9 @@ package org.homeapart.service.Impl;
 import lombok.AllArgsConstructor;
 import org.homeapart.domain.Landlord;
 import org.homeapart.domain.Role;
-import org.homeapart.domain.User;
 import org.homeapart.repository.LandlordRepository;
 import org.homeapart.service.LandlordService;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 
