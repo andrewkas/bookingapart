@@ -41,10 +41,6 @@ public class PersistenceContextBeansConfiguration {
         properties.put("hibernate.connection.useUnicode", "true");
         properties.put("current_session_context_class", "org.springframework.orm.hibernate5.SpringSessionContext");
         properties.put("hibernate.javax.cache.provider", "org.ehcache.jsr107.EhcacheCachingProvider");
-      //  properties.put("hibernate.cache.region.factory_class", "org.hibernate.cache.ehcache.EhCacheRegionFactory");
-      //  properties.put("hibernate.cache.use_second_level_cache", "true");
-      //  properties.put("hibernate.cache.ehcache.missing_cache_strategy", "create");
-      //  properties.put("hibernate.cache.use_query_cache", "true");
         return properties;
     }
 }
