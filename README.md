@@ -1,4 +1,4 @@
-# BOOKING APARTMENT
+# BOOKING APARTMENTS
 
 ### Tech stack:
 
