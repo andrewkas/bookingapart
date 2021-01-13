@@ -60,7 +60,12 @@ public class ApartController {
     @GetMapping("/address")
     @ResponseStatus(HttpStatus.OK)
     public List<Address> findByAddress(@RequestParam Country country, @RequestParam City city){
-        return addressService.findByCountryAndCity(country,city);
+        List<Address> addresses=addressService.findByCountryAndCity(country,city);
+        if (addresses.isEmpty()){
+            throw new EntityNotFoundException("Apartments not found! Check or change address!");}
+
+        else
+        return addresses;
     }
 
     @GetMapping("/find")

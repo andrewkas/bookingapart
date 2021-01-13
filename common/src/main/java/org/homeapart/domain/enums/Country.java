@@ -1,21 +1,17 @@
 package org.homeapart.domain.enums;
 
-import java.awt.*;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.homeapart.domain.enums.City.*;
-
-public enum Country {
+public enum Country{
     BELARUS
-     ,POLAND
-    ,UKRAINE
-    ,RUSSIA
-    ,USA;
+      ,POLAND
+     ,UKRAINE
+     ,RUSSIA
+     ,USA;
 
-
-    }
+}
 
 
 

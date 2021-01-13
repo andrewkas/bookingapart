@@ -5,10 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.checkerframework.checker.units.qual.Luminance;
 import org.homeapart.domain.enums.City;
 import org.homeapart.domain.enums.Country;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlElement;
 import java.util.Collections;
 import java.util.Set;
 

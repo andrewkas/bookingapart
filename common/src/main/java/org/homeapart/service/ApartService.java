@@ -11,27 +11,27 @@ import java.util.Optional;
 
 public interface ApartService {
 
-    @Cacheable("apart")
+
     List<Apart> findAll();
 
     Apart save(Apart apart);
 
     Apart update(Apart apart);
 
-    @Cacheable("apart")
-     Optional<Apart> findById(Long apartId);
 
-    @Cacheable("apart")
+    Optional<Apart> findById(Long apartId);
+
+
     List <Apart> findByType(ApartamentType type);
 
-    @Cacheable("apart")
+
     List <Apart> findByStatus(ApartamentStatus status);
 
     Long delete (Apart apart);
 
     List<Apart> findApartByLandlordId(Long landlordId);
 
-    @Cacheable("apart")
+
     List<Apart> findByParam(Country country,
                                    City city,
                                    Integer questNumber,

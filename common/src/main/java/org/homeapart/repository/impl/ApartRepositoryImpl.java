@@ -14,6 +14,7 @@ import org.homeapart.domain.enums.Country;
 import org.homeapart.repository.ApartRepository;
 import org.homeapart.service.AddressService;
 import org.homeapart.service.LandlordService;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,16 +23,17 @@ import java.util.Optional;
 
 @Repository
 @Log4j2
+@Cacheable("apart")
 public class ApartRepositoryImpl implements ApartRepository {
 
   private SessionFactory sessionFactory;
-  private LandlordService landlordService;
 
 
 
-  public ApartRepositoryImpl(SessionFactory sessionFactory, LandlordService landlordService) {
+
+  public ApartRepositoryImpl(SessionFactory sessionFactory) {
     this.sessionFactory = sessionFactory;
-    this.landlordService = landlordService;
+
   }
 
   @Override
