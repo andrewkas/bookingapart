@@ -3,7 +3,6 @@ package org.homeapart.security.configuration;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.security.filter.JwtFilter;
 import org.homeapart.security.service.UserProvider;
-import org.homeapart.security.util.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +27,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserProvider userProvider;
 
-    //private final TokenUtils tokenUtils;
 
     private final JwtFilter jwtFilter;
 
@@ -39,12 +37,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(userProvider)
                 .passwordEncoder(passwordEncoder);
     }
- //       @Bean
- //   public JwtFilter jwtFilterBean(AuthenticationManager authenticationManager) throws Exception {
- //       JwtFilter jwtFilter = new JwtFilter(tokenUtils, userProvider);
- //       JwtFilter.setAuthenticationManager(authenticationManager);
- //       return jwtFilter;
- //   }
 
     @Bean
     @Override
@@ -88,8 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/**").hasRole("ADMIN")
                 .antMatchers("/user").hasAnyRole("USER","ADMIN")
                 .antMatchers("/apart/**").hasAnyRole("MODERATOR","ADMIN")
-                .antMatchers("/landlord").hasAnyRole("MODERATOR","ADMIN")
-                .antMatchers("/landlord/**").hasRole("USER")
+                .antMatchers("/landlord/**").hasAnyRole("USER","MODERATOR","ADMIN")
                 .antMatchers("/booking/**").hasAnyRole("USER","MODERATOR","ADMIN")
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -98,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web.ignoring()
                 .antMatchers(
                         "/v2/api-docs",
