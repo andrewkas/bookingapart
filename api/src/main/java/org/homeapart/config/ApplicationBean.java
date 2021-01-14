@@ -30,7 +30,7 @@ public class ApplicationBean {
 
         @Bean
         public CacheManager cacheManager() {
-           CaffeineCacheManager cacheManager = new CaffeineCacheManager("apart");
+           CaffeineCacheManager cacheManager = new CaffeineCacheManager("apart","landlord");
            cacheManager.setCaffeine(cacheProperties());
            return cacheManager;
         }

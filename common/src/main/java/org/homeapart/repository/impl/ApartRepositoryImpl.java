@@ -23,7 +23,7 @@ import java.util.Optional;
 
 @Repository
 @Log4j2
-@Cacheable("apart")
+
 public class ApartRepositoryImpl implements ApartRepository {
 
   private SessionFactory sessionFactory;
@@ -35,7 +35,7 @@ public class ApartRepositoryImpl implements ApartRepository {
     this.sessionFactory = sessionFactory;
 
   }
-
+  @Cacheable("apart")
   @Override
   public List<Apart> findByAddress(String country, String city) {
     try (Session session = sessionFactory.openSession()) {
@@ -53,7 +53,7 @@ public class ApartRepositoryImpl implements ApartRepository {
           .createQuery("select a from Apart a where a.status=: status",Apart.class).setParameter("status",status).list();
     }
   }
-
+  @Cacheable("apart")
   @Override
   public List<Apart> findByType (ApartamentType type) {
     try (Session session = sessionFactory.openSession()) {
@@ -70,7 +70,7 @@ public class ApartRepositoryImpl implements ApartRepository {
               .setParameter("landlordId",landlordId).list();
     }
       }
-
+  @Cacheable("apart")
       @Override
       public List<Apart> findByParam(Country country,
                                       City city,
@@ -96,14 +96,14 @@ public class ApartRepositoryImpl implements ApartRepository {
       return object;
     }
   }
-
+  @Cacheable("apart")
   @Override
   public List<Apart> findAll() {
     try (Session session = sessionFactory.openSession()) {
       return session.createQuery("select a from Apart a", Apart.class).list();
     }
   }
-
+  @Cacheable("apart")
   @Override
   public Optional<Apart> findById(Long key) {
     try (Session session = sessionFactory.openSession()) {

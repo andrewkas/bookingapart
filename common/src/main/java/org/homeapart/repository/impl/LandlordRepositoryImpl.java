@@ -8,6 +8,7 @@ import org.homeapart.domain.Landlord;
 import org.homeapart.domain.Role;
 import org.homeapart.domain.User;
 import org.homeapart.repository.LandlordRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
@@ -24,6 +25,7 @@ public class LandlordRepositoryImpl implements LandlordRepository {
         this.sessionFactory = sessionFactory;
     }
 
+    @Cacheable("landlord")
     @Override
     public Optional<Landlord> findByLogin(String login) {
         try (Session session = sessionFactory.openSession()) {
