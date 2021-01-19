@@ -3,7 +3,7 @@ package org.homeapart.service.Impl;
 import lombok.AllArgsConstructor;
 import org.homeapart.domain.Role;
 import org.homeapart.domain.User;
-import org.homeapart.repository.UserRepository;
+import org.homeapart.repository.impl.UserRepository;
 import org.homeapart.service.UserService;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -44,8 +44,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long delete(User user) {
-        return userRepository.delete(user);
+    public void delete(User user) {
+         userRepository.deleteById(user.getId());
     }
 
     @Override

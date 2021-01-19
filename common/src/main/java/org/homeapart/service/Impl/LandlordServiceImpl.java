@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.homeapart.domain.Landlord;
 import org.homeapart.domain.Role;
 import org.homeapart.repository.LandlordRepository;
+import org.homeapart.repository.impl.LandlordRepository;
 import org.homeapart.service.LandlordService;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -28,7 +29,7 @@ public class LandlordServiceImpl implements LandlordService {
 
     @Override
     public Landlord update(Landlord landlord) {
-        return landlordRepository.update(landlord);
+        return landlordRepository.update(landlord.getId());
     }
 
     @Override
@@ -44,7 +45,7 @@ public class LandlordServiceImpl implements LandlordService {
 
     @Override
     public Long delete(Landlord landlord) {
-        return landlordRepository.delete(landlord);
+        return landlordRepository.delete(landlord.getId());
     }
 
     @Override
