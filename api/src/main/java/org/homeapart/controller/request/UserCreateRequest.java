@@ -3,6 +3,7 @@ package org.homeapart.controller.request;
 import org.homeapart.domain.enums.Gender;
 import lombok.Data;
 
+import javax.validation.constraints.*;
 import java.sql.Timestamp;
 import java.util.Date;
 

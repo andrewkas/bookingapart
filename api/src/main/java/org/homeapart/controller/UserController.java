@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import javax.persistence.NoResultException;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -57,10 +58,9 @@ public class UserController {
 
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public User savingUser(@RequestBody UserCreateRequest userCreateRequest) {
-        User user = conversionService.convert(userCreateRequest,User.class);
-        return userService.save(user);
+    public ResponseEntity <User> savingUser(@Valid @RequestBody UserCreateRequest userCreateRequest) {
+        User userSave = conversionService.convert(userCreateRequest,User.class);
+        return new ResponseEntity(userService.save(userSave), HttpStatus.CREATED);
 
     }
 
