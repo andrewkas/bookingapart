@@ -13,19 +13,19 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 public class PersistenceContextBeansConfiguration {
-    @Bean(name = "sessionFactory")
-    public SessionFactory getSessionFactory(DataSource dataSource) throws Exception {
+    @Autowired
+    @Bean(name = "entityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+        LocalContainerEntityManagerFactoryBean em
+                = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource(dataSource);
+        em.setPackagesToScan("org.homeapart");
 
-        LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
+        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        em.setJpaVendorAdapter(vendorAdapter);
+        em.setJpaProperties(getAdditionalProperties());
 
-        factoryBean.setPackagesToScan("org.homeapart");
-        factoryBean.setDataSource(dataSource);
-        factoryBean.setHibernateProperties(getAdditionalProperties());
-        factoryBean.afterPropertiesSet();
-
-        SessionFactory sf = factoryBean.getObject();
-        System.out.println("## getSessionFactory: " + sf);
-        return sf;
+        return em;
     }
 
     private Properties getAdditionalProperties() {
