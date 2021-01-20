@@ -1,5 +1,6 @@
 package org.homeapart.service.Impl;
 
+import lombok.AllArgsConstructor;
 import org.homeapart.domain.Additionally;
 import org.homeapart.domain.Apart;
 import org.homeapart.repository.AdditionallyRepository;
@@ -9,12 +10,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class AdditionallyServiceImpl implements AdditionallyService {
+
     private final AdditionallyRepository additionallyRepository;
 
-    public AdditionallyServiceImpl(AdditionallyRepository additionallyRepository) {
-        this.additionallyRepository = additionallyRepository;
-    }
 
     @Override
     public List<Additionally> findAll() {
@@ -32,12 +32,12 @@ public class AdditionallyServiceImpl implements AdditionallyService {
     }
 
     @Override
-    public Long delete(Additionally additionally) {
-        return additionallyRepository.delete(additionally);
+    public Long delete(Long additionallyId) {
+        return additionallyRepository.deleteAdditionalliesById(additionallyId);
     }
 
     @Override
-    public Additionally findById(Long id) {
-        Optional<Additionally> optional= additionallyRepository.findById(id);
-        return optional.orElseGet(optional::orElseThrow);
+    public Optional<Additionally> findById(Long id) {
+
+        return additionallyRepository.findById(id);
 }}

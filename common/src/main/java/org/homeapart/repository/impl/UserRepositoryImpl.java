@@ -15,85 +15,85 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
-@Log4j2
-public class UserRepositoryImpl implements UserRepository {
+//@Repository
+//@Log4j2
+public class UserRepositoryImpl  {
 
-
-    private SessionFactory sessionFactory;
-
-
-    public UserRepositoryImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-
-    @Override
-    public List<User> findAll() {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("select u from User u order by u.id asc", User.class).list();
-
-        }
-    }
-
-
-    @Override
-    public Optional<User> findByLogin(String login) {
-        try (
-                Session session = sessionFactory.openSession()) {
-
-            return session.createQuery("select u from User u where u.login=:login", User.class)
-                    .setParameter("login", login).uniqueResultOptional();
-
-
-        }
-    }
-
-
-    @Override
-    public User save(User object) {
-        try (Session session = sessionFactory.openSession()) {
-            session.saveOrUpdate(object);
-            return object;
-        }
-    }
-
-    @Override
-    public Optional<User> findById(Long key) {
-        try (Session session = sessionFactory.openSession()) {
-
-            return Optional.ofNullable(session.find(User.class, key));
-        }
-    }
-
-    @Override
-    public User update(User object) {
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.getTransaction();
-            transaction.begin();
-            session.saveOrUpdate(object);
-            transaction.commit();
-            return object;
-        }
-    }
-
-    @Override
-    public Long delete(User user) {
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.getTransaction();
-            transaction.begin();
-            session.delete(user);
-            transaction.commit();
-            return user.getId();
-        }
-    }
-
-    @Override
-    public List<Role> findRole(Long id) {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("select u.userRole from User u where u.id=:id", Role.class)
-                    .setParameter("id", id).list();
-        }
-    }
+//
+//    private SessionFactory sessionFactory;
+//
+//
+//    public UserRepositoryImpl(SessionFactory sessionFactory) {
+//        this.sessionFactory = sessionFactory;
+//    }
+//
+//
+//    @Override
+//    public List<User> findAll() {
+//        try (Session session = sessionFactory.openSession()) {
+//            return session.createQuery("select u from User u order by u.id asc", User.class).list();
+//
+//        }
+//    }
+//
+//
+//    @Override
+//    public Optional<User> findByLogin(String login) {
+//        try (
+//                Session session = sessionFactory.openSession()) {
+//
+//            return session.createQuery("select u from User u where u.login=:login", User.class)
+//                    .setParameter("login", login).uniqueResultOptional();
+//
+//
+//        }
+//    }
+//
+//
+//    @Override
+//    public User save(User object) {
+//        try (Session session = sessionFactory.openSession()) {
+//            session.saveOrUpdate(object);
+//            return object;
+//        }
+//    }
+//
+//    @Override
+//    public Optional<User> findById(Long key) {
+//        try (Session session = sessionFactory.openSession()) {
+//
+//            return Optional.ofNullable(session.find(User.class, key));
+//        }
+//    }
+//
+//    @Override
+//    public User update(User object) {
+//        try (Session session = sessionFactory.openSession()) {
+//            Transaction transaction = session.getTransaction();
+//            transaction.begin();
+//            session.saveOrUpdate(object);
+//            transaction.commit();
+//            return object;
+//        }
+//    }
+//
+//    @Override
+//    public Long delete(User user) {
+//        try (Session session = sessionFactory.openSession()) {
+//            Transaction transaction = session.getTransaction();
+//            transaction.begin();
+//            session.delete(user);
+//            transaction.commit();
+//            return user.getId();
+//        }
+//    }
+//
+//    @Override
+//    public List<Role> findRole(Long id) {
+//        try (Session session = sessionFactory.openSession()) {
+//            return session.createQuery("select u.userRole from User u where u.id=:id", Role.class)
+//                    .setParameter("id", id).list();
+//        }
+//    }
 }
 

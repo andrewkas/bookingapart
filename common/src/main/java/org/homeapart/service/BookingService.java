@@ -13,7 +13,7 @@ public interface BookingService {
 
     Optional<Booking> findById(Long bookingId);
 
-    Long delete (Booking booking);
+    Long delete (Long bookingId);
 
     List<Booking> findByUserId(Long userId);
 }

@@ -6,16 +6,17 @@ import org.homeapart.domain.enums.ApartamentStatus;
 import org.homeapart.domain.enums.ApartamentType;
 import org.homeapart.domain.enums.City;
 import org.homeapart.domain.enums.Country;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ApartRepository extends CrudRepository<Long, Apart> {
+public interface ApartRepository extends JpaRepository< Apart, Long> {
 
     //List<Apart> search(String query);
 
-    List<Apart> findByAddress(String country,String city);
+    List<Apart> findByAddress_CountryAndAddress_City(String country,String city);
 
     List<Apart> findByStatus(ApartamentStatus status);
 
@@ -23,13 +24,14 @@ public interface ApartRepository extends CrudRepository<Long, Apart> {
 
     List <Apart> findByLandlordId(Long landlordId);
 
-    public List<Apart> findByParam(Country country,
-                                   City city,
-                                   Integer questNumber,
-                                   ApartamentType type,
-                                   Double costPerDay);
+    List<Apart> findByAddress_CountryAndAddress_CityAndGuestNumberAnAndTypeAndCostPerDay(Country country,
+                                                                                                City city,
+                                                                                                Integer questNumber,
+                                                                                                ApartamentType type,
+                                                                                                Double costPerDay);
 
 
+    Apart update(Apart apart);
 
-
+    Long deleteApartById(Long apartId);
 }

@@ -1,5 +1,6 @@
 package org.homeapart.service.Impl;
 
+import lombok.AllArgsConstructor;
 import org.homeapart.domain.Address;
 import org.homeapart.domain.enums.City;
 import org.homeapart.domain.enums.Country;
@@ -12,12 +13,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class AddressServiceImpl implements AddressService {
-    private final AddressRepository addressRepository;
 
-    public AddressServiceImpl(AddressRepository addressRepository) {
-        this.addressRepository = addressRepository;
-    }
+    private final AddressRepository addressRepository;
 
     @Override
     public List<Address> findAll() {
@@ -30,9 +29,8 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Address findById(Long id) {
-        Optional<Address> optional= addressRepository.findById(id);
-        return optional.orElseGet(optional::orElseThrow);
+    public Optional<Address> findById(Long id) {
+        return addressRepository.findById(id);
     }
 
 

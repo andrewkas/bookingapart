@@ -27,7 +27,7 @@ public interface ApartService {
 
     List <Apart> findByStatus(ApartamentStatus status);
 
-    Long delete (Apart apart);
+    Long delete (Long apartId);
 
     List<Apart> findApartByLandlordId(Long landlordId);
 

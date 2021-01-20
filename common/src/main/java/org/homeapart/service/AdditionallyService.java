@@ -4,6 +4,7 @@ import org.homeapart.domain.Additionally;
 import org.homeapart.domain.Apart;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AdditionallyService {
     List<Additionally> findAll();
@@ -12,8 +13,8 @@ public interface AdditionallyService {
 
     List<Additionally> findByApart(Apart apart);
 
-    Long delete(Additionally additionally);
+    Long delete(Long id);
 
-    Additionally findById(Long id);
+    Optional<Additionally> findById(Long id);
 
 }

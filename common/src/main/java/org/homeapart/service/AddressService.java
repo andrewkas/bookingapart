@@ -4,13 +4,14 @@ import org.homeapart.domain.Address;
 import org.homeapart.domain.enums.City;
 import org.homeapart.domain.enums.Country;
 import java.util.List;
+import java.util.Optional;
 
 public interface AddressService {
     List<Address> findAll();
 
     Address save(Address address);
 
-    Address findById(Long id);
+    Optional<Address> findById(Long id);
 
     List<Address> findByCity(City city);
 

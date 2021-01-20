@@ -15,7 +15,6 @@ public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
 
 
-
     @Override
     public List<Booking> findAll() {
         return bookingRepository.findAll();
@@ -37,8 +36,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Long delete(Booking booking) {
-        return bookingRepository.delete(booking);
+    public Long delete(Long bookingId) {
+        return bookingRepository.deleteBookingById(bookingId);
     }
 
     @Override

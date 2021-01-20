@@ -1,5 +1,6 @@
 package org.homeapart.service.Impl;
 
+import lombok.AllArgsConstructor;
 import org.homeapart.domain.Apart;
 import org.homeapart.domain.enums.ApartamentStatus;
 import org.homeapart.domain.enums.ApartamentType;
@@ -13,14 +14,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-
+@AllArgsConstructor
 public class ApartServiceImpl implements ApartService {
 
     private final ApartRepository apartRepository;
 
-    public ApartServiceImpl(ApartRepository apartRepository) {
-        this.apartRepository = apartRepository;
-    }
 
     @Override
     public List<Apart> findAll() {
@@ -53,8 +51,8 @@ public class ApartServiceImpl implements ApartService {
     }
 
     @Override
-    public Long delete(Apart apart) {
-        return apartRepository.delete(apart);
+    public Long delete(Long apartId) {
+        return apartRepository.deleteApartById(apartId);
     }
 
     @Override
@@ -64,7 +62,7 @@ public class ApartServiceImpl implements ApartService {
 
     @Override
     public List<Apart> findByParam(Country country, City city, Integer questNumber, ApartamentType type, Double costPerDay) {
-        return apartRepository.findByParam(country,
+        return apartRepository.findByAddress_CountryAndAddress_CityAndGuestNumberAnAndTypeAndCostPerDay(country,
               city,
             questNumber,
              type,
