@@ -13,7 +13,6 @@ public abstract class LandlordConvert <S, T> implements Converter<S,T> {
         landlord.setName(request.getName());
         landlord.setSurname(request.getSurname());
         landlord.setLogin(request.getLogin());
-        landlord.setPassword(request.getPassword());
         landlord.setChanged(new Timestamp(System.currentTimeMillis()));
         landlord.setEmail(request.getEmail());
         landlord.setPhone(request.getPhone());

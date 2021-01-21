@@ -32,7 +32,7 @@ public class ApartServiceImpl implements ApartService {
 
     @Override
     public Apart update(Apart apart) {
-        return apartRepository.update(apart);
+        return apartRepository.save(apart);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class ApartServiceImpl implements ApartService {
 
     @Override
     public List<Apart> findByParam(Country country, City city, Integer questNumber, ApartamentType type, Double costPerDay) {
-        return apartRepository.findByAddress_CountryAndAddress_CityAndGuestNumberAnAndTypeAndCostPerDay(country,
+        return apartRepository.findByAddress_CountryAndAddress_CityAndGuestNumberAndTypeAndCostPerDay(country,
               city,
             questNumber,
              type,

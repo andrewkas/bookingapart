@@ -7,6 +7,8 @@ import org.homeapart.service.AddressService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
@@ -26,7 +28,7 @@ public class AddressController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Address findById(@PathVariable Long id) {
-        return addressService.findById(id);
+        return addressService.findById(id).orElseThrow(()->new EntityNotFoundException("Address with id "+id+" not found!"));
     }
 
 

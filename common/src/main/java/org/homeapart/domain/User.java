@@ -45,8 +45,8 @@ public class User {
     @Column
     private String surname;
 
-    @Column(name="e_mail")
     @Email
+    @Column(name="e_mail")
     private String email;
 
     @Column(name="birth_date")
@@ -59,12 +59,12 @@ public class User {
     private Timestamp changed;
 
     @NotBlank
-    @Size(min = 2,max = 40,message = "login not valid")
+    @Size(min = 6,max = 200,message = "login not valid")
     @Column
     private String login;
 
     @NotBlank
-    @Size(min = 2,max = 200,message = "password not valid")
+    @Size(min = 6,max = 200,message = "password not valid")
     @Column
     private String password;
 

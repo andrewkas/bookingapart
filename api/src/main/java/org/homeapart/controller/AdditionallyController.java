@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
+
 
 @RestController
 @RequestMapping("/additionnally")
@@ -32,9 +34,8 @@ public class AdditionallyController {
     @DeleteMapping ("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Long deleteAdditionally(@PathVariable Long id) {
-        if (additionallyService.findById(id) == null) throw new IllegalArgumentException("additionally do not exist");
-        Additionally additionally = additionallyService.findById(id);
-        return additionallyService.delete(additionally);
+        Additionally additionally = additionallyService.findById(id).orElseThrow(()->new EntityNotFoundException("Address with id "+id+" not found!"));
+        return additionallyService.delete(id);
 
     }
 }

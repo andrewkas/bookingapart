@@ -89,8 +89,10 @@ public class ApartController {
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.OK)
     public Apart updateApart(@RequestBody ApartChangeRequest apartChangeRequest) {
-        Apart apart=conversionService.convert(apartChangeRequest,Apart.class);
-        return apartService.update(apart);
+        if (apartService.findById(apartChangeRequest.getId()).isPresent()) {
+            Apart apart = conversionService.convert(apartChangeRequest, Apart.class);
+            return apartService.update(apart);
+        } else throw new EntityNotFoundException("Apart with id " + apartChangeRequest.getId() + " not found");
     }
 
 
@@ -98,7 +100,7 @@ public class ApartController {
     @ResponseStatus(HttpStatus.OK)
     public Long deleteApart(@PathVariable Long id) {
         Apart apart = apartService.findById(id).orElseThrow(()->new EntityNotFoundException("Apart with id "+id+" not found" ));
-        return apartService.delete(apart);
+        return apartService.delete(id);
     }
 }
 

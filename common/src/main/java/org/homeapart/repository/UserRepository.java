@@ -3,6 +3,7 @@ package org.homeapart.repository;
 import org.homeapart.domain.Role;
 import org.homeapart.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,8 +11,10 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User,Long> {
 
        Optional<User> findByLogin(String login);
+
+       @Query(value="select u.userRole from User u where u.id=:id")
        List<Role> findRole(Long id);
-       User update(User user);
+
        Long deleteUserById(Long Id);
 
     //  List<User> findByLogin(String login);

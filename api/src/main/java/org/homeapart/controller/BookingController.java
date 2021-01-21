@@ -59,25 +59,26 @@ public class BookingController {
 
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<BookingResponce> updateReservation(@RequestParam BookingChangeRequest bookingChangeRequest){
-        Booking booking=conversionService.convert(bookingChangeRequest,Booking.class);
-        bookingService.update(booking);
-        return new ResponseEntity<>(new BookingResponce(
-                apartService.findById(booking.getApart().getId()).get()
-                ,userService.findById(booking.getUser().getId()).get()
-                ,booking.getPrice()
-                ,booking.getDateFrom()
-                ,booking.getDateTo())
-                ,HttpStatus.OK);
+    public ResponseEntity<BookingResponce> updateReservation(@RequestParam BookingChangeRequest bookingChangeRequest) {
+        if (bookingService.findById(bookingChangeRequest.getId()).isPresent()) {
+            Booking booking = conversionService.convert(bookingChangeRequest, Booking.class);
+            bookingService.update(booking);
+            return new ResponseEntity<>(new BookingResponce(
+                    apartService.findById(booking.getApart().getId()).get()
+                    , userService.findById(booking.getUser().getId()).get()
+                    , booking.getPrice()
+                    , booking.getDateFrom()
+                    , booking.getDateTo())
+                    , HttpStatus.OK);
 
+        } else throw new EntityNotFoundException("Booking with id " + bookingChangeRequest.getId() + " not found");
     }
-
 
    @DeleteMapping("/delete/{id}")
    @ResponseStatus(HttpStatus.OK)
    public Long deleteBooking(@PathVariable Long id) {
        Booking booking = bookingService.findById(id).orElseThrow(()->new EntityNotFoundException("Booking with id "+id+" not found"));
-       return bookingService.delete(booking);
+       return bookingService.delete(id);
    }
 
 

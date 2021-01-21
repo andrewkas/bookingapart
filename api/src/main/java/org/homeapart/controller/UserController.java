@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import org.homeapart.controller.request.UserChangeRequest;
 import org.homeapart.controller.request.UserCreateRequest;
 
+import org.homeapart.domain.Apart;
 import org.homeapart.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.homeapart.service.UserService;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
 import javax.validation.Valid;
 import java.util.List;
@@ -68,17 +71,18 @@ public class UserController {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public User updateUser(@RequestBody UserChangeRequest userChangeRequest) {
-       User user = conversionService.convert(userChangeRequest,User.class);
-        return userService.update(user);
+        if (userService.findById(userChangeRequest.getId()).isPresent()) {
+            User user = conversionService.convert(userChangeRequest, User.class);
+            return userService.update(user);
+        } else throw new EntityNotFoundException("User with id " + userChangeRequest.getId() + " not found");
     }
 
     @DeleteMapping("/id")
     @ResponseStatus(HttpStatus.OK)
     public Long deleteUser(@RequestParam (value="id") Long id) {
         User user = userService.findById(id).orElseThrow(()->new UsernameNotFoundException(String.format("User with id "+id+" not found")));
-        return userService.delete(user);
+        return userService.delete(id);
     }
-
 
 }
 

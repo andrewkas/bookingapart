@@ -1,6 +1,7 @@
 package org.homeapart.repository;
 
 import org.homeapart.domain.Apart;
+import org.homeapart.domain.Booking;
 import org.homeapart.domain.Landlord;
 import org.homeapart.domain.enums.ApartamentStatus;
 import org.homeapart.domain.enums.ApartamentType;
@@ -24,14 +25,14 @@ public interface ApartRepository extends JpaRepository< Apart, Long> {
 
     List <Apart> findByLandlordId(Long landlordId);
 
-    List<Apart> findByAddress_CountryAndAddress_CityAndGuestNumberAnAndTypeAndCostPerDay(Country country,
+
+    List<Apart> findByAddress_CountryAndAddress_CityAndGuestNumberAndTypeAndCostPerDay(Country country,
                                                                                                 City city,
                                                                                                 Integer questNumber,
                                                                                                 ApartamentType type,
                                                                                                 Double costPerDay);
 
 
-    Apart update(Apart apart);
 
     Long deleteApartById(Long apartId);
 }

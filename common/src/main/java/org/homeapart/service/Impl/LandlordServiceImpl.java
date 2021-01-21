@@ -28,7 +28,7 @@ public class LandlordServiceImpl implements LandlordService {
 
     @Override
     public Landlord update(Landlord landlord) {
-        return landlordRepository.update(landlord);
+        return landlordRepository.save(landlord);
     }
 
     @Override

@@ -27,7 +27,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking update(Booking booking) {
-        return bookingRepository.update(booking);
+        return bookingRepository.save(booking);
     }
 
     @Override
