@@ -28,21 +28,21 @@ public class Landlord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Size(min = 2,max = 40,message = "surname not valid")
+    @NotEmpty(message = "name must not be empty")
+    @Size(min = 2,max = 200,message = "the number of symbols of name must be more than 2 and less than 200")
     @Column
     private String name;
 
-    @NotNull
-    @Size(min=4, max=20, message = "the number of symbols must be more than 4 and less than 20")
+    @NotEmpty(message = "name must not be empty")
+    @Size(min=2, max=200, message = "the number of symbols of surname must be more than 2 and less than 200")
     @Column
     private String surname;
 
-    @Pattern(regexp = "^(\\+\\d{1,3}( )?)?((\\(\\d{2}\\))|\\d{2})[- .]?\\d{3}[- .]?\\d{2}[-.]?\\d{4}$")
+    @Pattern(regexp = "^(\\+\\d{1,3}( )?)?((\\(\\d{2}\\))|\\d{2})?\\d{7}$")
     @Column
     private String phone;
 
-    @Email
+    @Email(message = "email should be a valid")
     @Column(name="e_mail")
     private String email;
 
@@ -52,13 +52,13 @@ public class Landlord {
     @Column
     private Timestamp changed;
 
-    @NotBlank
-    @Size(min = 6,max = 40,message = "login not valid")
-    @Column
+    @NotEmpty(message = "name must not be empty")
+    @Size(min = 6,max = 200,message = "login not valid, must be more than 6 and less than 200")
+    @Column (unique = true)
     private String login;
 
-    @NotBlank
-    @Size(min = 6,max = 100,message = "password not valid")
+    @NotEmpty(message = "name must not be empty")
+    @Size(min = 6,max = 200,message = "password not valid, must be more than 6 and less than 200")
     @Column
     private String password;
 

@@ -9,19 +9,12 @@ import lombok.Setter;
 import org.homeapart.domain.enums.Gender;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.homeapart.domain.enums.SystemRole;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import javax.validation.constraints.NotNull;
-
-
+import javax.validation.constraints.*;
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Collections;
 import java.util.Date;
-import java.util.Set;
+
 
 @Data
 @Getter
@@ -35,19 +28,20 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Size(min = 2,max = 40,message = "surname not valid")
+    @NotBlank(message = "name must not be blank")
+    @Size(min = 2,max = 100,message = "the number of symbols of name must be more than 2 and less than 100")
    @Column
     private String name;
 
-   @NotNull
-   @Size(min=4, max=20, message = "the number of symbols must be more than 4 and less than 20")
+   @NotBlank(message = "surname must not be blank")
+   @Size(min=4, max=100, message = "the number of symbols of surname must be more than 2 and less than 100")
     @Column
     private String surname;
 
-    @Email
+    @Email(message = "email should be a valid")
     @Column(name="e_mail")
     private String email;
+
 
     @Column(name="birth_date")
     private Date birthDate;
@@ -58,13 +52,13 @@ public class User {
     @Column
     private Timestamp changed;
 
-    @NotBlank
-    @Size(min = 6,max = 200,message = "login not valid")
-    @Column
+    @NotBlank(message = "login must not be blank")
+    @Size(min = 6,max = 200,message = "login not valid, must be more than 6 and less than 200")
+    @Column(unique = true)
     private String login;
 
-    @NotBlank
-    @Size(min = 6,max = 200,message = "password not valid")
+    @NotBlank(message = "password must not be empty")
+    @Size(min = 6,max = 200,message = "password not valid, must be more than 6 and less than 200")
     @Column
     private String password;
 

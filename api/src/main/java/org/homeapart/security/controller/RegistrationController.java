@@ -62,29 +62,30 @@ public class RegistrationController {
         } else throw new UsernameNotFoundException(String.format("User with login '%s' is present", login));
     }
     @PostMapping("/landlord")
-    public ResponseEntity<Map<String,Object>> registrationLandlord(@RequestBody LandlordCreateRequest landlordCreateRequest){
+    public ResponseEntity<Map<String,Object>> registrationLandlord(@RequestBody LandlordCreateRequest landlordCreateRequest) {
+//        String login = landlordCreateRequest.getLogin();
+//        if (!userService.findByLogin(login).isPresent() && !landlordService.findByLogin(login).isPresent()) {
+            Landlord landlord = new Landlord();
+            landlord.setName(landlordCreateRequest.getName());
+            landlord.setSurname(landlordCreateRequest.getSurname());
+            landlord.setPhone(landlordCreateRequest.getPhone());
+            landlord.setEmail(landlordCreateRequest.getEmail());
+            landlord.setCreated(new Timestamp(System.currentTimeMillis()));
+            landlord.setChanged(new Timestamp(System.currentTimeMillis()));
+            landlord.setLogin(landlordCreateRequest.getLogin());
+            landlord.setPassword(passwordEncoder.encode(landlordCreateRequest.getPassword()));
+            landlord.setLandlordRole(new Role(2l, SystemRole.ROLE_MODERATOR));
+            Landlord savedLandlord = landlordService.save(landlord);
 
-        Landlord landlord = new Landlord();
-        landlord.setName(landlordCreateRequest.getName());
-        landlord.setSurname(landlordCreateRequest.getSurname());
-        landlord.setPhone(landlordCreateRequest.getPhone());
-        landlord.setEmail(landlordCreateRequest.getEmail());
-        landlord.setCreated(new Timestamp(System.currentTimeMillis()));
-        landlord.setChanged(new Timestamp(System.currentTimeMillis()));
-        landlord.setLogin(landlordCreateRequest.getLogin());
-        landlord.setPassword(passwordEncoder.encode(landlordCreateRequest.getPassword()));
-        landlord.setLandlordRole(new Role(2l,SystemRole.ROLE_MODERATOR));
-        Landlord savedLandlord = landlordService.save(landlord);
+            Map<String, Object> result = new HashMap<>();
 
-        Map<String, Object> result = new HashMap<>();
+            result.put("id", savedLandlord.getId());
+            result.put("login", savedLandlord.getLogin());
 
-        result.put("id", savedLandlord.getId());
-        result.put("login", savedLandlord.getLogin());
+            return new ResponseEntity<>(result, HttpStatus.CREATED);
 
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
-
+       // } else throw new UsernameNotFoundException(String.format("Landlord with login '%s' is present", login));
     }
-
 
 
 
