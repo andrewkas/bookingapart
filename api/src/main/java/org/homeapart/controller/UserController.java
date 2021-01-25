@@ -12,6 +12,7 @@ import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -77,11 +78,13 @@ public class UserController {
         } else throw new EntityNotFoundException("User with id " + userChangeRequest.getId() + " not found");
     }
 
+    @Transactional
     @DeleteMapping("/id")
     @ResponseStatus(HttpStatus.OK)
-    public Long deleteUser(@RequestParam (value="id") Long id) {
-        User user = userService.findById(id).orElseThrow(()->new UsernameNotFoundException(String.format("User with id "+id+" not found")));
-        return userService.delete(id);
+    public ResponseEntity<Object> deleteUser(@RequestParam (value="id") Long id) {
+        User user = userService.findById(id).orElseThrow(()->new EntityNotFoundException(String.format("User with id "+id+" not found")));
+         userService.delete(id);
+         return new ResponseEntity("Deleted",HttpStatus.OK);
     }
 
 }

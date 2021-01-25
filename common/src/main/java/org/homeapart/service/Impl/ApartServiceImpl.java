@@ -51,8 +51,8 @@ public class ApartServiceImpl implements ApartService {
     }
 
     @Override
-    public Long delete(Long apartId) {
-        return apartRepository.deleteApartById(apartId);
+    public void delete(Long apartId) {
+         apartRepository.deleteApartById(apartId);
     }
 
     @Override

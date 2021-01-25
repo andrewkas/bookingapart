@@ -33,9 +33,10 @@ public class AdditionallyController {
 
     @DeleteMapping ("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Long deleteAdditionally(@PathVariable Long id) {
+    public ResponseEntity<Object> deleteAdditionally(@PathVariable Long id) {
         Additionally additionally = additionallyService.findById(id).orElseThrow(()->new EntityNotFoundException("Address with id "+id+" not found!"));
-        return additionallyService.delete(id);
+         additionallyService.delete(id);
 
+        return new ResponseEntity("Deleted",HttpStatus.OK);
     }
 }

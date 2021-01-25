@@ -13,7 +13,7 @@ public interface AdditionallyService {
 
     List<Additionally> findByApart(Apart apart);
 
-    Long delete(Long id);
+    void delete(Long id);
 
     Optional<Additionally> findById(Long id);
 

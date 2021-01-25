@@ -15,7 +15,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
        @Query(value="select u.userRole from User u where u.id=:id")
        List<Role> findRole(Long id);
 
-       Long deleteUserById(Long Id);
+       void removeUserById(Long Id);
 
     //  List<User> findByLogin(String login);
 //

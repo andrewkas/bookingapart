@@ -13,6 +13,7 @@ import org.homeapart.service.LandlordService;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
@@ -95,12 +96,13 @@ public class ApartController {
         } else throw new EntityNotFoundException("Apart with id " + apartChangeRequest.getId() + " not found");
     }
 
-
+    @Transactional
     @DeleteMapping ("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Long deleteApart(@PathVariable Long id) {
+    public ResponseEntity<Object> deleteApart(@PathVariable Long id) {
         Apart apart = apartService.findById(id).orElseThrow(()->new EntityNotFoundException("Apart with id "+id+" not found" ));
-        return apartService.delete(id);
+         apartService.delete(id);
+        return new ResponseEntity("Deleted",HttpStatus.OK);
     }
 }
 

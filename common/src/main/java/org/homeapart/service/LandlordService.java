@@ -17,7 +17,7 @@ public interface LandlordService {
 
    Optional<Landlord> findByLogin(String login);
 
-    Long delete (Long landlordId);
+    void delete (Long landlordId);
 
     List<Role> findRole(Long id);
 }

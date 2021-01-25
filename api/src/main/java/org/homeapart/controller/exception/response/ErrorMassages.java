@@ -1,4 +1,4 @@
-package org.homeapart.controller.response;
+package org.homeapart.controller.exception.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

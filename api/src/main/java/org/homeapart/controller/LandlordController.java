@@ -9,6 +9,7 @@ import org.homeapart.service.LandlordService;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityNotFoundException;
 
@@ -52,12 +53,13 @@ public class LandlordController {
 
             } else throw new EntityNotFoundException("User with id " + landlordChangeRequest.getId() + " not found");
         }
-
+        @Transactional
         @DeleteMapping("/id")
         @ResponseStatus(HttpStatus.OK)
-        public Long deleteLandlord(@RequestParam (value="id") Long id) {
+        public ResponseEntity<Object> deleteLandlord(@RequestParam (value="id") Long id) {
             Landlord landlord = landlordService.findById(id).orElseThrow(()->new EntityNotFoundException("Landlord with id "+id+" not found" ));
-            return landlordService.delete(id);
+             landlordService.delete(id);
+            return new ResponseEntity("Deleted",HttpStatus.OK);
         }
     }
 

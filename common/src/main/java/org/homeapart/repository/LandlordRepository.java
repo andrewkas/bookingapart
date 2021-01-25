@@ -18,5 +18,7 @@ public interface LandlordRepository extends JpaRepository<Landlord,Long> {
     List<Role> findRole(Long id);
 
 
-    Long deleteLandlordById(Long Id);
+    void removeLandlordById(Long Id);
+
+
 }

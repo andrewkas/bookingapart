@@ -43,8 +43,8 @@ public class LandlordServiceImpl implements LandlordService {
     }
 
     @Override
-    public Long delete(Long landlordId) {
-        return landlordRepository.deleteLandlordById(landlordId);
+    public void delete(Long landlordId) {
+        landlordRepository.removeLandlordById(landlordId);
     }
 
     @Override

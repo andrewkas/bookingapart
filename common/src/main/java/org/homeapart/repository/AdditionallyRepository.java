@@ -11,5 +11,5 @@ public interface AdditionallyRepository extends JpaRepository<Additionally, Long
 
     List<Additionally> findByApart(Apart apart);
 
-    Long deleteAdditionalliesById(Long additionallyId);
+    void deleteAdditionalliesById(Long additionallyId);
 }

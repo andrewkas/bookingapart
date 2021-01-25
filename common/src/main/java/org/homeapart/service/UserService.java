@@ -17,7 +17,7 @@ public interface UserService {
 
     Optional<User> findByLogin(String login);
 
-     Long delete (Long id);
+     void delete (Long id);
 
     List<Role> findRole(Long id);
 

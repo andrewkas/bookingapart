@@ -32,8 +32,8 @@ public class AdditionallyServiceImpl implements AdditionallyService {
     }
 
     @Override
-    public Long delete(Long additionallyId) {
-        return additionallyRepository.deleteAdditionalliesById(additionallyId);
+    public void delete(Long additionallyId) {
+        additionallyRepository.deleteAdditionalliesById(additionallyId);
     }
 
     @Override
