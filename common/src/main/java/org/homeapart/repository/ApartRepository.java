@@ -27,8 +27,8 @@ public interface ApartRepository extends JpaRepository< Apart, Long> {
 
     List <Apart> findByLandlordId(Long landlordId);
 
- //   @Query(value="select a from Apart a where a.address.country=:country and a.address.city=:city " +
- //             "and a.guestNumber>:questNumber and a.type=:type and a.costPerDay<:costPerDay ")
+    @Query(value="select a from Apart a where a.address.country=:country and a.address.city=:city " +
+              "and a.guestNumber>:questNumber and a.type=:type and a.costPerDay<:costPerDay ")
     List<Apart> findByAddress_CountryAndAddress_CityAndGuestNumberAndTypeAndCostPerDay(Country country
                                                                                        ,City city
                                                                                        ,Integer questNumber
